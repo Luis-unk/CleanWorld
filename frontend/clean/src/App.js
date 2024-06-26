@@ -8,7 +8,7 @@ function App() {
 
     <Router>
       <Routes>
-        <Route path="/" element={<Cadastro/> }/>
+        <Route path="/cadastro" element={<Cadastro/> }/>
       </Routes>
     </Router>
 

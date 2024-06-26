@@ -1,6 +1,6 @@
 module.exports = {
   host: "localhost",
-  user: "root",
-  password: "root",
+  user: "developer",
+  password: "12345678",
   database: "cleanWorld",
 };

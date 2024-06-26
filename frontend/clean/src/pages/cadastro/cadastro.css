@@ -1,0 +1,116 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(10, 39, 10);
+}
+
+.titulo {
+    
+    justify-content: center;
+
+    height: 100px;
+    width: auto;
+    background-color: rgb(91, 180, 136);
+
+}
+h1 {
+    margin-left: 50px;
+    color: rgb(25, 77, 45);
+}
+
+.box {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.box-form {
+
+    align-self: center;
+    margin: 100px;
+    border-radius: 20px;
+    background-color: aqua;
+    max-width: 400px;
+    height: 600px;
+
+}
+
+.formulario {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+
+}
+
+#cpf {
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}
+
+
+#nome {
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}
+
+
+#endereco {
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}
+
+
+#senhaUsuario {
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}
+
+
+#email {
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}
+
+
+#tipoCadastro {
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}
+
+
+#telefone{
+
+    margin: 5px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 2px;
+
+}

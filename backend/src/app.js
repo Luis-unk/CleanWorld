@@ -8,25 +8,25 @@ const cors = require("cors");
 
 
 const port = 3006;
-const cleanworld = express();
+const app = express();
 
-cleanworld.use(cors());
-cleanworld.use(bodyParser.json("application/json")) 
+app.use(cors());
+app.use(bodyParser.json("application/json")) 
 
-cleanworld.get("/", (req, res) => {
+app.get("/", (req, res) => {
     res.send("<h1> CleanWorld <h1>");
 })
 
-cleanworld.use("/api", freteiroRouter);
+app.use("/api", freteiroRouter);
 
-cleanworld.use("/api", usuarioRouter);
+app.use("/api", usuarioRouter);
 
-cleanworld.use("/api", coletorRouter);
+app.use("/api", coletorRouter);
 
-cleanworld.use("/api", descartanteRouter);
+app.use("/api", descartanteRouter);
 
 
 
-cleanworld.listen(port, () => {
+app.listen(port, () => {
     console.log(`Servidor rodando: http://localhost:${port}`);
 });
