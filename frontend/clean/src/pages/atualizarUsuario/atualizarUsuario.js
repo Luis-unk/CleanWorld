@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios, { formToJSON } from "axios";
 import { useForm, SubmitHandler } from "react-hook-form"
-import "./cadastro.css";
+import { useParams } from "react-router-dom";
+import "./atualizarUsuario.css";
 
-export function Cadastro() {
+export function AtualizarUsuario(){
 
   const { register, handleSubmit } = useForm()
 
-    const addPost = data => axios.post("http://localhost:3006/api/usuario", data) 
-      .then(()=> {
-        console.log("Usuario adicionado");
-      })
-      .catch(()=>{
-        console.log("ERRORR");
-      })
-       
-  return (
-    
-    <div className="box">
+  const attPut =  (data) => axios.put("http://localhost:3006/api/usuario/" + data.id)
+  .then(()=> {
+    console.log("Usuario Atualizado.");
+  })
+  .catch(()=>{
+    console.log("ERRORR");
+  })
+
+    return(
+        <div className="box">
 
       <div className="titulo">
         <h1>CleanWorld</h1>
       </div>
-      
+
+      <h1>ATUALIZAR USUARIO</h1>
+
       <div className="box-form">
-      <h1>CADASTRAR USUARIO</h1>
         <div className="formulario">
-          <form onSubmit={handleSubmit(addPost)}>
+          <form onSubmit={handleSubmit(attPut)}>
+
+              <label >Id: </label>
+              <input type="text" name="idUsuario" id="idUsuario"{...register("id")}/>
+              <br/>
 
               
               <label >Nome: </label>
@@ -70,11 +75,11 @@ export function Cadastro() {
               <br/>
               
               
-              <button type="submit" id="enviar">Enviar</button>  
+              <button type="submit" id="enviar">Editar</button>  
           </form>
 
         </div>
       </div>
     </div>
-  );
+    );
 }
