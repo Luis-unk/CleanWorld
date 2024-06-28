@@ -29,11 +29,20 @@ export function DeleteUsuario(){
         setSelectedValue(event.target.value);
     };
 
-
     var id = Number(selectedValue.substring(4, 6))
 
     if (id > 10) {
       id = Number(selectedValue.substring(4, 7))
+    }
+
+    const apagarUsuario = () => {
+      axios.delete(`http://localhost:3006/api/usuario/${id}`)
+      .then(()=> {
+        alert("Usuario Apagado!");
+      })
+      .catch(()=>{
+        alert("Erro ao apagar Usuario!");
+      })
     }
     
 
@@ -44,13 +53,13 @@ export function DeleteUsuario(){
         <h1>CleanWorld</h1>
 
         <a href="http://localhost:3000/cadastro">
-        <h3>Cadastro</h3>
+        <h3>Cadastrar</h3>
         </a>
         <a href="http://localhost:3000/atualizarUsuario">
         <h3>Editar </h3>
         </a>
-        <a href="">
-        <h3>Menu</h3>
+        <a href="http://localhost:3000/apagarUsuario">
+        <h3>Apagar</h3>
         </a>
       </div>
 
@@ -66,6 +75,8 @@ export function DeleteUsuario(){
           return <option>{"Id: " + usuario.id} | {"Nome: " +usuario.nome} </option>;
         })}
           </select>
+
+          <button id="apagarUsuario" onClick={apagarUsuario}>Apagar</button>
 
         
         </div>

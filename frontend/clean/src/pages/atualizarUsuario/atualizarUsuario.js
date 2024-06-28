@@ -52,13 +52,13 @@ export function AtualizarUsuario(){
         <h1>CleanWorld</h1>
 
         <a href="http://localhost:3000/cadastro">
-        <h3>Cadastro</h3>
+        <h3>Cadastrar</h3>
         </a>
         <a href="http://localhost:3000/atualizarUsuario">
         <h3>Editar </h3>
         </a>
-        <a href="">
-        <h3>Menu</h3>
+        <a href="http://localhost:3000/apagarUsuario">
+        <h3>Apagar</h3>
         </a>
       </div>
 

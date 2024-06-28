@@ -9,10 +9,10 @@ export function Cadastro() {
 
     const addPost = data => axios.post("http://localhost:3006/api/usuario", data) 
       .then(()=> {
-        console.log("Usuario adicionado");
+        alert("Usuario Adicionado!");
       })
       .catch(()=>{
-        console.log("ERRORR");
+        alert("Erro ao adicionar Usuario!");
       })
        
   return (
@@ -23,14 +23,14 @@ export function Cadastro() {
         <h1>CleanWorld</h1>
 
         <a href="http://localhost:3000/cadastro">
-  <h3>Cadastro</h3>
-  </a>
-  <a href="http://localhost:3000/atualizarUsuario">
-  <h3>Editar </h3>
-  </a>
-  <a href="">
-  <h3>Menu</h3>
-</a>
+        <h3>Cadastrar</h3>
+        </a>
+        <a href="http://localhost:3000/atualizarUsuario">
+        <h3>Editar </h3>
+        </a>
+        <a href="http://localhost:3000/apagarUsuario">
+        <h3>Apagar</h3>
+        </a>
       </div>
       
       <div className="box-form">
