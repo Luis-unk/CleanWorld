@@ -21,10 +21,20 @@ export function Cadastro() {
 
       <div className="titulo">
         <h1>CleanWorld</h1>
+
+        <a href="http://localhost:3000/cadastro">
+  <h3>Cadastro</h3>
+  </a>
+  <a href="http://localhost:3000/atualizarUsuario">
+  <h3>Editar </h3>
+  </a>
+  <a href="">
+  <h3>Menu</h3>
+</a>
       </div>
       
       <div className="box-form">
-      <h1>CADASTRAR USUARIO</h1>
+      <h1 className="cdd">CADASTRAR USUARIO</h1>
         <div className="formulario">
           <form onSubmit={handleSubmit(addPost)}>
 
@@ -70,7 +80,7 @@ export function Cadastro() {
               <br/>
               
               
-              <button type="submit" id="enviar">Enviar</button>  
+              <button type="submit" id="enviar">Cadastrar</button>  
           </form>
 
         </div>
