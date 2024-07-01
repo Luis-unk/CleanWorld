@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios, { formToJSON } from "axios";
 import { useForm, SubmitHandler } from "react-hook-form"
+
 import "./cadastro.css";
 
 export function Cadastro() {
@@ -28,13 +29,13 @@ export function Cadastro() {
         <a href="http://localhost:3000/atualizarUsuario">
         <h3>Editar </h3>
         </a>
-        <a href="http://localhost:3000/apagarUsuario">
+        <a href="http://localhost:3000/deleteUsuario">
         <h3>Apagar</h3>
         </a>
       </div>
-      
-      <div className="box-form">
       <h1 className="cdd">CADASTRAR USUARIO</h1>
+      <div className="box-form">
+      
         <div className="formulario">
           <form onSubmit={handleSubmit(addPost)}>
 
@@ -46,37 +47,37 @@ export function Cadastro() {
 
            
               <label>CPF:</label>
-              <input type="text" name="cpf" id="cpf"{...register("cpf")}/>
+              <input type="text" name="cpf" id="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"{...register("cpf", { required: true })}/>
               <br/>
               
               
               
               <label>Endereço: </label>
-              <input type="text" name="endereco" id="endereco"{...register("endereco")}/>
+              <input type="text" name="endereco" id="endereco"{...register("endereco", { required: true })}/>
               <br/>
              
 
              
               <label>Telefone: </label>
-              <input type="text" name="telefone" id="telefone"{...register("telefone")}/>
+              <input type="tel" name="telefone" id="telefone"{...register("telefone", { required: true })}/>
               <br/>
             
 
             
               <label>Email: </label>
-              <input type="text" name="email" id="email"{...register("email")}/>
+              <input type="email" name="email" id="email"{...register("email", { required: true })}/>
               <br/>
               
 
               
               <label>Senha: </label>
-              <input type="text" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario")}/>
+              <input type="password" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario", { required: true})}/>
               <br/>
               
 
               
               <label>Tipo Cadastro: </label>
-              <input type="text" name="tipoCadastro" id="tipoCadastro"{...register("tipoCadastro")}/>
+              <input type="text" name="tipoCadastro" id="tipoCadastro"{...register("tipoCadastro", { required: true })}/>
               <br/>
               
               

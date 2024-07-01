@@ -58,18 +58,17 @@ export function DeleteUsuario(){
         <a href="http://localhost:3000/atualizarUsuario">
         <h3>Editar </h3>
         </a>
-        <a href="http://localhost:3000/apagarUsuario">
+        <a href="http://localhost:3000/deleteUsuario">
         <h3>Apagar</h3>
         </a>
       </div>
 
 
       <div className="box-form">
-      <h1 className="att">APAGAR USUARIO</h1>
+        <div className="formulario" id="formulario">
+        <h1 className="att">Apagar Usuario</h1>
 
-        <div className="formulario">
-
-          <label for="usuarios">Escolha o usuario:</label>
+          <label for="usuarios" >Escolha o usuario:</label>
           <select name="usuarios" id="selectUsuarios" required value={selectedValue} onChange={handleChange}>
           {(usuarios || []).map((usuario) => {
           return <option>{"Id: " + usuario.id} | {"Nome: " +usuario.nome} </option>;

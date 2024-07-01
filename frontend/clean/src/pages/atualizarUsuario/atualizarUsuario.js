@@ -57,7 +57,7 @@ export function AtualizarUsuario(){
         <a href="http://localhost:3000/atualizarUsuario">
         <h3>Editar </h3>
         </a>
-        <a href="http://localhost:3000/apagarUsuario">
+        <a href="http://localhost:3000/deleteUsuario">
         <h3>Apagar</h3>
         </a>
       </div>
@@ -65,9 +65,8 @@ export function AtualizarUsuario(){
 
       <div className="box-form">
       <h1 className="att">ATUALIZAR USUARIO</h1>
-        <div className="formulario">
 
-          <label for="usuarios">Escolha o usuario:</label>
+          <label for="selectUsuarios">Escolha o usuario:</label>
           <select name="usuarios" id="selectUsuarios" required value={selectedValue} onChange={handleChange}>
           {(usuarios || []).map((usuario) => {
           return <option>{"Id: " + usuario.id} | {"Nome: " +usuario.nome} </option>;
@@ -76,49 +75,50 @@ export function AtualizarUsuario(){
 
           <form onSubmit={handleSubmit(attPut)}>
               
-              <label >Nome: </label>
-              <input type="text" name="nome" id="nome"{...register("nome")}/>
-              <br/>
-              
-              <label>CPF:</label>
-              <input type="text" name="cpf" id="cpf"{...register("cpf")}/>
-              <br/>
+              <p><label for="nome">Nome: </label>
+              <input type="text" name="nome" id="nome"{...register("nome", { required: true })}/>
+              </p>
               
               
+              <p><label for="cpf">CPF:</label>
+              <input type="text" name="cpf" id="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"{...register("cpf",{ required: true })}/>
+              </p>
               
+              <p>
               <label>Endereço: </label>
-              <input type="text" name="endereco" id="endereco"{...register("endereco")}/>
-              <br/>
+              <input type="text" name="endereco" id="endereco"{...register("endereco", { required: true })}/>
+              </p>
              
 
-             
+             <p>
               <label>Telefone: </label>
-              <input type="text" name="telefone" id="telefone"{...register("telefone")}/>
-              <br/>
+              <input type="tel" name="telefone" id="telefone"{...register("telefone", { required: true })}/>
+              </p>
             
 
-            
+              <p>
               <label>Email: </label>
-              <input type="text" name="email" id="email"{...register("email")}/>
-              <br/>
+              <input type="email" name="email" id="email"{...register("email", { required: true })}/>
+              </p>
               
 
-              
+              <p>
               <label>Senha: </label>
-              <input type="text" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario")}/>
-              <br/>
+              <input type="password" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario",{ required: true })}/>
+              </p>
+             
               
 
-              
+              <p>
               <label>Tipo Cadastro: </label>
-              <input type="text" name="tipoCadastro" id="tipoCadastro"{...register("tipoCadastro")}/>
-              <br/>
+              <input type="text" name="tipoCadastro" id="tipoCadastro"{...register("tipoCadastro", { required: true })}/>
+              </p>
               
               
               <button type="submit" id="enviar">Editar</button>  
           </form>
 
-        </div>
+     
       </div>
     </div>
     );

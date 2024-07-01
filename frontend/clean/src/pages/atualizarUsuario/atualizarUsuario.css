@@ -30,48 +30,48 @@ h1 {
 .box {
 
     display: flex;
-    flex-direction: column;
     justify-content: center;
+
 
 }
 
 .box-form {
 
-    align-self: center;
-    margin: 100px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
     border-radius: 20px;
     border-style: solid;
-    background: linear-gradient( rgb(35, 80, 35), black);
-    max-width: 400px;
+    width: 400px;
     height: 600px;
-
+    background: linear-gradient( rgb(35, 80, 35), black);
+  
 }
 
+
+
 #selectUsuarios {
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
-    padding: 2px;
+    padding: 10px;
+    margin-bottom: 20px;
 
 }
 
 .att {
-    text-align: center;
+
+  
+   text-align: center; 
+   
 }
 
-.formulario {
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 100px;
-
-}
 
 #cpf {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -80,7 +80,7 @@ h1 {
 
 #idUsuario {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -89,7 +89,7 @@ h1 {
 
 #nome {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -99,7 +99,7 @@ h1 {
 
 #endereco {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -109,7 +109,7 @@ h1 {
 
 #senhaUsuario {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -119,7 +119,7 @@ h1 {
 
 #email {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -129,7 +129,7 @@ h1 {
 
 #tipoCadastro {
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -139,7 +139,7 @@ h1 {
 
 #telefone{
 
-    margin: 5px;
+    margin: 10px;
     border-radius: 15px;
     border-style: none;
     padding: 2px;
@@ -147,10 +147,14 @@ h1 {
 
 }
 
+input {
+
+}
+
 #enviar {
 
-    margin-left: 10px;
-    margin-top: 20px;
+    
+   margin-top: 5px;
     border-radius: 20px;
     border: none;
     font-size: 15px;
