@@ -32,6 +32,9 @@ export function Cadastro() {
         <a href="http://localhost:3000/deleteUsuario">
         <h3>Apagar</h3>
         </a>
+        <a href="http://localhost:3000/login">
+        <h3>Login</h3>
+        </a>
       </div>
       <h1 className="cdd">CADASTRAR USUARIO</h1>
       <div className="box-form">
@@ -71,7 +74,7 @@ export function Cadastro() {
 
               
               <label>Senha: </label>
-              <input type="password" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario", { required: true})}/>
+              <input type="text" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario", { required: true})}/>
               <br/>
               
 
@@ -81,9 +84,9 @@ export function Cadastro() {
               <br/>
               
               
-              <button type="submit" id="enviar">Cadastrar</button>  
-          </form>
+              <button type="submit" id="enviar">Cadastrar</button>
 
+          </form>
         </div>
       </div>
     </div>

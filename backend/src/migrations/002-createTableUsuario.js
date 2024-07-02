@@ -11,10 +11,10 @@ try{
     await connection.query(`CREATE TABLE IF NOT EXISTS usuario (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(255) NOT NULL,
-        cpf VARCHAR(255) NOT NULL,
+        cpf VARCHAR(255) NOT NULL unique,
         endereco VARCHAR(255) NOT NULL,
         telefone VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL unique,
         senhaUsuario VARCHAR(255) NOT NULL,
         tipoCadastro INT NOT NULL
     )`);

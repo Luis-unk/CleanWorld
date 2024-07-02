@@ -61,6 +61,9 @@ export function DeleteUsuario(){
         <a href="http://localhost:3000/deleteUsuario">
         <h3>Apagar</h3>
         </a>
+        <a href="http://localhost:3000/login">
+        <h3>Login</h3>
+        </a>
       </div>
 
 

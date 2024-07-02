@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios, { formToJSON } from "axios";
 import { useForm, SubmitHandler } from "react-hook-form"
-import { useParams } from "react-router-dom";
+import { navBar } from "../../components/nav-bar/navBar";
 import "./atualizarUsuario.css";
 
 export function AtualizarUsuario(){
@@ -60,6 +60,9 @@ export function AtualizarUsuario(){
         <a href="http://localhost:3000/deleteUsuario">
         <h3>Apagar</h3>
         </a>
+        <a href="http://localhost:3000/login">
+        <h3>Login</h3>
+        </a>
       </div>
 
 
@@ -104,7 +107,7 @@ export function AtualizarUsuario(){
 
               <p>
               <label>Senha: </label>
-              <input type="password" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario",{ required: true })}/>
+              <input type="text" name="senhaUsuario" id="senhaUsuario"{...register("senhaUsuario",{ required: true })}/>
               </p>
              
               

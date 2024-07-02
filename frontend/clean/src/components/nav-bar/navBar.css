@@ -1,0 +1,10 @@
+.titulo {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    width: auto;
+    background: linear-gradient(to right,  rgb(83, 172, 114), rgb(55, 131, 66));
+
+}

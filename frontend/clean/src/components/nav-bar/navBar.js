@@ -4,12 +4,20 @@ import axios from "axios";
 export function navBar() {
     return (
         <nav>
-            <div class="nav1">
-                <a href="" class="">Logo</a>
-                <a href="" class="">Login</a>
-                <a href="" class="">Menu</a>
-                <a href="" class="">Sobre</a>
-            </div>
+           <div className="titulo">
+        <h1>CleanWorld</h1>
+
+        <a href="http://localhost:3000/cadastro">
+        <h3>Cadastrar</h3>
+        </a>
+        <a href="http://localhost:3000/atualizarUsuario">
+        <h3>Editar </h3>
+        </a>
+        <a href="http://localhost:3000/deleteUsuario">
+        <h3>Apagar</h3>
+        </a>
+        </div>
+        
         </nav>
         
 

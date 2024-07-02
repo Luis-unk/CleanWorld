@@ -1,5 +1,7 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
+const bcrypt = require("bcrypt");
+
 
 async function getAllUsuario(){
     const connection = await mysql.createConnection(databaseConfig);
@@ -13,6 +15,13 @@ async function getAllUsuario(){
 };
 
 async function createUsuario(nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro){
+
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(senhaUsuario, salt);
+    senhaUsuario = passwordHash;
+
+    console.log(senhaUsuario);
+
     const connection = await mysql.createConnection(databaseConfig);
 
     const insertUsuario = "insert into usuario(nome,cpf,endereco,telefone,email,senhaUsuario,tipocadastro) values (?,?,?,?,?,?,?)";
@@ -53,10 +62,28 @@ async function getUsuarioById(id){
     return usuario;
 }
 
+async function validateUsuario(email, senhaUsuario) {
+
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(senhaUsuario, salt);
+
+    const connection = await mysql.createConnection(databaseConfig);
+    
+    const [usuario] = await connection.query("SELECT * FROM usuario WHERE email = ?", [email]);
+
+    if (bcrypt.compareSync(senhaUsuario, passwordHash) == true && usuario[0].email == email) {
+
+        return usuario;
+    };
+
+}
+
+
 module.exports = {
     getAllUsuario,
     createUsuario,
     updateUsuario,
     deleteUsuario,
-    getUsuarioById
+    getUsuarioById,
+    validateUsuario,
 };

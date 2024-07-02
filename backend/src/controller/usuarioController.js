@@ -1,4 +1,6 @@
 const usuarioService = require("../service/usuarioService.js");
+const jwt = require("jsonwebtoken");
+const SECRET = 'Hoisjda9hyg2872ijsadlOOOCleanWorld'
 
 async function getAllUsuario(req, res) {
   try {
@@ -79,10 +81,32 @@ async function getUsuarioById(req, res) {
   }
 }
 
+async function validateLogin(req, res) {
+
+  try {
+    const {email, senhaUsuario} = req.body;
+    
+    const usuarioValidado = await usuarioService.validateUsuario(email, senhaUsuario);
+
+    const usuarioId = usuarioValidado[0].id
+    console.log(usuarioId)
+
+    const token = jwt.sign({ usuarioId }, SECRET);
+    res.status(200).json({ auth: true, token});
+  } catch (error) {
+    res.status(401).send({
+      message: "Error getting user!",
+      body: error.message,
+    })
+  }
+}
+
+
 module.exports = {
   getAllUsuario,
   createUsuario,
   updateUsuario,
   deleteUsuario,
   getUsuarioById,
+  validateLogin,
 };
