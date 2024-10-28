@@ -14,7 +14,7 @@ async function getAllUsuario(){
 
 };
 
-async function createUsuario(nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro){
+async function createUser(nome,cpf,telefone,birthDate, provisorio,email,senhaUsuario,tipoCadastro){
 
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(senhaUsuario, salt);
@@ -22,9 +22,9 @@ async function createUsuario(nome,cpf,endereco,telefone,email,senhaUsuario,tipoC
 
     const connection = await mysql.createConnection(databaseConfig);
 
-    const insertUsuario = "insert into usuario(nome,cpf,endereco,telefone,email,senhaUsuario,tipocadastro) values (?,?,?,?,?,?,?)";
+    const insertUsuario = "insert into usuario(nome,cpf,telefone,STR_TO_DATE(birthDate,'%d/%m/%Y'),provisorio, email,senhaUsuario,tipocadastro) values (?,?,?,?,?,?,?,?)";
 
-    await connection.query(insertUsuario,[nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro])
+    await connection.query(insertUsuario,[nome,cpf,telefone,birthDate,provisorio,email,senhaUsuario,tipoCadastro])
 
     await connection.end();
 }
@@ -78,7 +78,7 @@ async function validateUsuario(email, senhaUsuario) {
 
 module.exports = {
     getAllUsuario,
-    createUsuario,
+    createUser,
     updateUsuario,
     deleteUsuario,
     getUsuarioById,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-export default function LoginGScreen({ navigation }) {
+export default function LoginFirstScreen({ navigation }) {
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
@@ -14,6 +14,7 @@ export default function LoginGScreen({ navigation }) {
     console.log('Telefone:', phone);
     console.log('Data de Nascimento:', birthDate);
     console.log('Usuário:', userType);
+    navigation.navigate("RegisterSecondScreen", {name, cpf, phone, birthDate, userType});
   };
 
   return (
@@ -76,7 +77,7 @@ export default function LoginGScreen({ navigation }) {
           <Text style={styles.userTypeText}>Coletor</Text>
         </View>
         
-        <Button title="Cadastre-se" onPress={handleRegister} />
+        <Button title="Prosseguir" onPress={handleRegister} />
       </View>
     </View>
   );

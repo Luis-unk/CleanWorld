@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import axios from 'axios';
 
-export default function LoginGScreen({ navigation }) {
+export default function LoginSecondScreen({ navigation , route}) {
+  const {name, cpf, phone, birthDate, userType} = route.params
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleRegister = () => {
+    console.log("----------------------")
+    console.log('Nome:', name);
+    console.log('CPF:', cpf);
+    console.log('Telefone:', phone);
+    console.log('Data de Nascimento:', birthDate);
+    console.log('Usuário:', userType);
+    console.log('Email:', email);
+    console.log('Senha:', password);
+
+
     try{
-      const response = await axios.post("http://localhost:8000/api/login", {
-        email,
-        password
-      })
+      const response = async () => {
+        response = await axios.post("http://localhost:8000/api/user", {
+          name,
+          cpf, 
+          phone, 
+          birthDate,
+          userType,
+          email,
+          password
+        })
+      }
     }
     catch{}
-    console.log('Usuário:', email);
-    console.log('Senha:', password);
-  };
-
-  const handleForgotPassword = () => {
-    console.log('Esqueceu a senha?');
   };
 
   return (
@@ -33,7 +44,7 @@ export default function LoginGScreen({ navigation }) {
       </View>
 
       <View style={styles.loginBox}>
-        <Text style={styles.loginTitle}>Login</Text>
+        <Text style={styles.loginTitle}>Registro</Text>
         
         <Text style={styles.label}>Email</Text>
         <TextInput
@@ -49,14 +60,10 @@ export default function LoginGScreen({ navigation }) {
           placeholder="Senha"
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
         />
-
-        <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
-        </TouchableOpacity>
         
-        <Button title="Login" onPress={handleLogin} />
+        <Button title="Finalizar Cadastro" 
+        onPress={handleRegister} />
       </View>
     </View>
   );
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 6
   },
   loginTitle: {
     fontSize: 28,
@@ -111,11 +118,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ced4da',
     borderRadius: 5,
-  },
-  forgotPassword: {
-    color: '#007BFF',
-    textDecorationLine: 'underline',
-    marginVertical: 10,
-    textAlign: 'center',
+    marginBottom: 20
   },
 });

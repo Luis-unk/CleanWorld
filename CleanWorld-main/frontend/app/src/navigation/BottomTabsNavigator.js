@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginGScreen from '../screens/LoginScreen/LoginGScreen';
 import DiscardListScreen from '../screens/DiscardList/DiscardList';
 import DiscardingProfileScreen from '../screens/DiscardingProfile/DiscardingProfile';
-import RegisterGScreen from '../screens/RegisterScreen/RegisterGScreen';
+import RegisterFirstScreen from '../screens/RegisterScreen/RegisterFirstScreen';
+import RegisterSecondScreen from '../screens/RegisterScreen/RegisterSecondScreen'
 import { Ionicons } from '@expo/vector-icons'; 
 import { View, Text, Image, StyleSheet } from 'react-native';
 
@@ -44,7 +45,17 @@ export default function BottomTabsNavigator() {
         />
         <Tab.Screen
           name="Register"
-          component={RegisterGScreen}
+          component={RegisterFirstScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="person-add" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="RegisterSecondScreen"
+          component={RegisterSecondScreen}
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (

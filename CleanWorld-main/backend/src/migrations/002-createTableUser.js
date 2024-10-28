@@ -1,7 +1,7 @@
 const mysql = require("mysql2/promise");
 const databaseconfig = require("../config/database.js");
 
-async function createusuariotable() {
+async function createUserTable() {
 try{
 
     const connection = await mysql.createConnection(databaseconfig);
@@ -12,11 +12,12 @@ try{
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(255) NOT NULL,
         cpf VARCHAR(255) NOT NULL unique,
-        endereco VARCHAR(255) NOT NULL,
         telefone VARCHAR(255) NOT NULL,
+        birthDate DATE NOT NULL,
+        provisorio VARCHAR(255),
         email VARCHAR(255) NOT NULL unique,
         senhaUsuario VARCHAR(255) NOT NULL,
-        tipoCadastro INT NOT NULL
+        tipoCadastro INT 
     )`);
 
     await connection.end();
@@ -27,4 +28,4 @@ try{
     }
 }
 
-createusuariotable();
+createUserTable();

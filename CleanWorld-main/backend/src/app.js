@@ -7,7 +7,7 @@ const descartanteRouter = require("./router/descartanteRouter");
 const cors = require("cors");
 
 
-const port = 3006;
+const port = 8000;
 const app = express();
 
 app.use(cors());
