@@ -1,10 +1,10 @@
-const usuarioService = require("../service/userService.js");
+const userService = require("../service/userService.js");
 const jwt = require("jsonwebtoken");
 const SECRET = 'Hoisjda9hyg2872ijsadlOOOCleanWorld'
 
-async function getAllUsuario(req, res) {
+async function getAllUser(req, res) {
   try {
-    const rows = await usuarioService.getAllUsuario();
+    const rows = await userService.getAllUser();
     res.status(200).json(rows);
   } catch (error) {
     res.status(500).send({
@@ -15,19 +15,17 @@ async function getAllUsuario(req, res) {
 }
 
 async function createUser(req, res) {
-  const { nome, cpf, endereco, telefone,birthDate, provisorio, email, senhaUsuario, tipoCadastro } = req.body;
+  const { name, cpf, phone, birthDate, userType, email, password } = req.body;
 
   try {
-    await usuarioService.createUser(
-      nome,
+    await userService.createUser(
+      name,
       cpf,
-      endereco,
-      telefone,
+      phone,
       birthDate,
-      provisorio,
+      userType,
       email,
-      senhaUsuario,
-      tipoCadastro
+      password
     );
 
     res.status(201).json({ message: "Sucess" });
@@ -138,7 +136,7 @@ const rotaOK = async (req, res) => {
 
 
 module.exports = {
-  getAllUsuario,
+  getAllUser,
   createUser,
   updateUsuario,
   deleteUsuario,

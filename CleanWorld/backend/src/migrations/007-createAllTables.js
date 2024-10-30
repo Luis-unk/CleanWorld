@@ -1,15 +1,15 @@
-const createUserTable = require("../migrations/002-createTableUser");
-const createTableFreteiro = require("../migrations/006-createTableFreteiro");
-const createTableColetor = require("../migrations/003-createTableColetor");
-const createTableDescartante = require("../migrations/004-createTableDescartante");
-const createTableCadastroMateriais = require("../migrations/005-createTableCadastroMateriais");
+const createTableUser = require("../migrations/002-createTableUser");
+const createTableUserCollector = require("./003-createTableUserCollector");
+const createTableUserDiscard = require("./004-createTableUserDiscard");
+const createTableRegisterOrder = require("./005-createTableRegisterOrder");
+const createTableRegisterVehicle = require("../migrations/006-createTableRegisterVehicle")
 
 async function createAllTables() {
-    await createUserTable();
-    await createTableColetor();
-    await createTableDescartante();
-    await createTableCadastroMateriais();
-    await createTableFreteiro();
+    await createTableUser();
+    await createTableUserDiscard();
+    await createTableRegisterVehicle();
+    await createTableUserCollector();
+    await createTableRegisterOrder();
 }
 
 createAllTables().then(() => {

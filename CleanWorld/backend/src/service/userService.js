@@ -3,10 +3,10 @@ const databaseConfig = require("../config/database.js");
 const bcrypt = require("bcrypt");
 
 
-async function getAllUsuario(){
+async function getAllUser(){
     const connection = await mysql.createConnection(databaseConfig);
 
-    const [rows] = await connection.query("SELECT * FROM usuario");
+    const [rows] = await connection.query("SELECT * FROM `user`");
 
     await connection.end();
 
@@ -14,17 +14,17 @@ async function getAllUsuario(){
 
 };
 
-async function createUser(nome,cpf,telefone,birthDate, provisorio,email,senhaUsuario,tipoCadastro){
+async function createUser(name, cpf, phone, birthDate, userType, email, password){
 
     const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(senhaUsuario, salt);
+    const passwordHash = await bcrypt.hash(password, salt);
     senhaUsuario = passwordHash;
 
     const connection = await mysql.createConnection(databaseConfig);
 
-    const insertUsuario = "insert into usuario(nome,cpf,telefone,STR_TO_DATE(birthDate,'%d/%m/%Y'),provisorio, email,senhaUsuario,tipocadastro) values (?,?,?,?,?,?,?,?)";
+    const insertUsuario = "INSERT INTO `user`(name,cpf,phone,birthDate,userType,email,password) values (?, ?, ?, STR_TO_DATE(?, '%d/%m/%Y'), ?, ?, ?)";
 
-    await connection.query(insertUsuario,[nome,cpf,telefone,birthDate,provisorio,email,senhaUsuario,tipoCadastro])
+    await connection.query(insertUsuario,[name, cpf, phone, birthDate, userType, email, passwordHash])
 
     await connection.end();
 }
@@ -77,7 +77,7 @@ async function validateUsuario(email, senhaUsuario) {
 }
 
 module.exports = {
-    getAllUsuario,
+    getAllUser,
     createUser,
     updateUsuario,
     deleteUsuario,
