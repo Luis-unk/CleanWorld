@@ -37,12 +37,12 @@ async function createUser(req, res) {
   }
 }
 
-async function updateUsuario(req, res) {
+async function updateUser(req, res) {
   try {
-    const { id } = req.params;
-    const { nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro } = req.body;
+    const { idUser } = req.params;
+    const { name, cpf, phone, birthDate, userType, email, password } = req.body;
 
-    await usuarioService.updateUsuario(nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro,id);
+    await userService.updateUser(idUser, name, cpf, phone, birthDate, userType, email, password);
 
     res.status(201).json({message: "Sucess"});
   } catch (error) {
@@ -53,12 +53,17 @@ async function updateUsuario(req, res) {
   }
 }
 
-async function deleteUsuario(req, res) {
+async function deleteUser(req, res) {
   try {
-    const { id } = req.params;
-    await usuarioService.deleteUsuario(id);
+    const { idUser } = req.params;
 
-    res.status(201).json({ message: "Sucess" });
+    if (!idUser || isNaN(idUser)) {
+      return res.status(400).send({ message: "Invalid user ID!" });
+    }
+
+    await userService.deleteUser(idUser);
+
+    res.status(200).json({ message: "Sucess" });
   } catch (error) {
     res.status(500).send({
       message: "Error delete user!",
@@ -67,12 +72,12 @@ async function deleteUsuario(req, res) {
   }
 }
 
-async function getUsuarioById(req, res) {
+async function getUserById(req, res) {
   try {
-    const { id } = req.params;
-    const usuario = await usuarioService.getUsuarioById(id);
+    const { idUser } = req.params;
+    const usuario = await userService.getUserById(idUser);
 
-    res.status(200).json(usuario);
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).send({
       message: "Error getting user!",
@@ -138,9 +143,9 @@ const rotaOK = async (req, res) => {
 module.exports = {
   getAllUser,
   createUser,
-  updateUsuario,
-  deleteUsuario,
-  getUsuarioById,
+  updateUser,
+  deleteUser,
+  getUserById,
   validateLogin,
   verifyJWT,
   rotaOK,

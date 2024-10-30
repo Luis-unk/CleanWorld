@@ -30,34 +30,39 @@ async function createUser(name, cpf, phone, birthDate, userType, email, password
 }
 
 
-async function updateUsuario(id,nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro){
+async function updateUser(idUser, name, cpf, phone, birthDate, userType, email, password){
     
     const connection = await mysql.createConnection(databaseConfig);  
     
-    const updateUsuario = "UPDATE usuario SET nome = ?, cpf = ?, endereco = ?, telefone = ?, email = ? , senhaUsuario = ?, tipoCadastro = ? where id = ?";
+    const updateUsuario = "UPDATE user SET name = ?, cpf = ?, phone = ?,birthDate = ?, userType = ?, email = ? , password = ?,  where idUser = ?";
     
-    await connection.query(updateUsuario,[id, nome,cpf,endereco,telefone,email,senhaUsuario,tipoCadastro])
+    await connection.query(updateUsuario,[idUser, name, cpf, phone, birthDate, userType, email, password])
     
     await connection.end();
 
 };
 
-async function deleteUsuario(id){
+async function deleteUser(idUser){
     const connection = await mysql.createConnection(databaseConfig);
 
-    await connection.query("DELETE FROM usuario WHERE id = ?", [id])
+    try {
+    const [result] = await connection.query("DELETE FROM user WHERE idUser = ?", [idUser]);
+    console.log(`Rows affected: ${result.affectedRows}`);
+    }catch (error) {
+        console.error("Error deleting user:", error);
+    }
 
     await connection.end();
 }
 
-async function getUsuarioById(id){
+async function getUserById(idUser){
     const connection = await mysql.createConnection(databaseConfig);
 
-    const [usuario] = await connection.query("SELECT * FROM usuario WHERE id = ?", [id]);
+    const [user] = await connection.query("SELECT * FROM user WHERE idUser = ?", [idUser]);
 
     await connection.end();
 
-    return usuario;
+    return user;
 }
 
 async function validateUsuario(email, senhaUsuario) {
@@ -79,8 +84,8 @@ async function validateUsuario(email, senhaUsuario) {
 module.exports = {
     getAllUser,
     createUser,
-    updateUsuario,
-    deleteUsuario,
-    getUsuarioById,
+    updateUser,
+    deleteUser,
+    getUserById,
     validateUsuario,
 };

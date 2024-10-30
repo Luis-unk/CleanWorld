@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const usuarioRouter = require("./router/usuarioRouter");
+const userRouter = require("./router/userRouter");
 const coletorRouter = require("./router/coletorRouter");
 const descartanteRouter = require("./router/descartanteRouter");
 const cors = require("cors");
@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
     res.send("<h1> CleanWorld <h1>");
 })
 
-app.use("/api", usuarioRouter);
+app.use("/api", userRouter);
 
 app.use("/api", coletorRouter);
 
