@@ -15,11 +15,8 @@ async function getAllUser(){
 };
 
 async function createUser(name, cpf, phone, birthDate, userType, email, password){
-
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
-    senhaUsuario = passwordHash;
-
     const connection = await mysql.createConnection(databaseConfig);
 
     const insertUsuario = "INSERT INTO `user`(name,cpf,phone,birthDate,userType,email,password) values (?, ?, ?, STR_TO_DATE(?, '%d/%m/%Y'), ?, ?, ?)";
@@ -30,16 +27,16 @@ async function createUser(name, cpf, phone, birthDate, userType, email, password
 }
 
 
-async function updateUser(idUser, name, cpf, phone, birthDate, userType, email, password){
-    
+async function updateUser(idUser, name, cpf, phone, birthDate, email, password){
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(password, salt);
     const connection = await mysql.createConnection(databaseConfig);  
+
+    const updateUser = "UPDATE user SET name = ?, cpf = ?, phone = ?,birthDate = STR_TO_DATE(?, '%d/%m/%Y'), email = ? , password = ?  WHERE idUser = ?";
     
-    const updateUsuario = "UPDATE user SET name = ?, cpf = ?, phone = ?,birthDate = ?, userType = ?, email = ? , password = ?,  where idUser = ?";
-    
-    await connection.query(updateUsuario,[idUser, name, cpf, phone, birthDate, userType, email, password])
+    await connection.query(updateUser,[name, cpf, phone, birthDate, email, passwordHash, idUser])
     
     await connection.end();
-
 };
 
 async function deleteUser(idUser){

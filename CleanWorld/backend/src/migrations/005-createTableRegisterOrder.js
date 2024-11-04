@@ -17,9 +17,9 @@ async function createTableRegisterOrder(){
         materialDescription VARCHAR(100),
         status INT NOT NULL,
         idUserDiscard INT,
-        idUserCollector INT,
+        idCollector INT,
         FOREIGN KEY (idUserDiscard) REFERENCES userDiscard(idUserDiscard),
-        FOREIGN KEY (idUserCollector) REFERENCES userCollector(idUserCollector)
+        FOREIGN KEY (idCollector) REFERENCES Collector(idCollector)
         );`);
     await connection.end();
     console.log(`Table registerOrder created`);

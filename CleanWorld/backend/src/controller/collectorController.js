@@ -1,8 +1,8 @@
-const coletorService = require('../service/coletorService.js');
+const collectorService = require('../service/collectorService.js');
 
-async function getAllcoletor(req, res){
+async function getAllCollector(req, res){
     try{
-        const rows = await coletorService.getAllColetor();
+        const rows = await collectorService.getAllCollector();
         res.status(200).json(rows);
     }catch(error){
         res.status(500).send({
@@ -12,10 +12,10 @@ async function getAllcoletor(req, res){
     }
 }
 
-async function createcoletor(req, res){
-    const{id, tipoColetor, peso, id_usuario} = req.body;
+async function createCollector(req, res){
+    const{nameEnterprise, cnpj, phone,userType, email, password} = req.body;
     try{
-        await coletorService.createColetor(id, tipoColetor, peso, id_usuario);
+        await collectorService.createCollector(nameEnterprise, cnpj, phone,userType, email, password);
         res.status(201).json({message:"Sucess"});
     }catch(error){
         res.status(500).send({
@@ -71,8 +71,8 @@ async function getColetorById(req, res){
 
 
 module.exports = {
-    getAllcoletor,
-    createcoletor,
+    getAllCollector,
+    createCollector,
     updatecoletor,
     deleteColetor,
     getColetorById,

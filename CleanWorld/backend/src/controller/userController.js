@@ -18,6 +18,11 @@ async function createUser(req, res) {
   const { name, cpf, phone, birthDate, userType, email, password } = req.body;
 
   try {
+    
+    if(userType != 0 && userType != 1) {
+        return res.status(400).json({ message: "Invalid userType! Must be 0 or 1. " })
+    }
+
     await userService.createUser(
       name,
       cpf,
@@ -40,9 +45,11 @@ async function createUser(req, res) {
 async function updateUser(req, res) {
   try {
     const { idUser } = req.params;
-    const { name, cpf, phone, birthDate, userType, email, password } = req.body;
+    const { name, cpf, phone, birthDate, email, password } = req.body;
 
-    await userService.updateUser(idUser, name, cpf, phone, birthDate, userType, email, password);
+    await userService.updateUser(idUser, name, cpf, phone, birthDate, email, password);
+
+    
 
     res.status(201).json({message: "Sucess"});
   } catch (error) {
