@@ -1,43 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export default function LoginFirstScreen({ navigation }) {
-  const [name, setName] = useState('');
+export default function RegisterFirstScreen({ navigation, route }) {
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  const [userType, setUserType] = useState('');
+  const { name, userType } = route.params;
 
-  const handleRegister = () => {
-    console.log('Nome:', name);
-    console.log('CPF:', cpf);
-    console.log('Telefone:', phone);
-    console.log('Data de Nascimento:', birthDate);
-    console.log('Usuário:', userType);
-    navigation.navigate("RegisterSecondScreen", {name, cpf, phone, birthDate, userType});
+  const handleRegister = () => {  
+    navigation.navigate("RegisterSecondScreen", { name, cpf, phone, birthDate, userType });
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={styles.headerBox}>
         <Image 
-          source={{ uri: '/assets/—Pngtree—green leaves vector icon design_5224035.png' }} 
+          source={require('../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
           style={styles.image}
         />
-        <Text style={styles.text}>CleanWorld</Text>
+        <Text style={styles.headerText}>CleanWorld</Text>
       </View>
 
-      <View style={styles.loginBox}>
-        <Text style={styles.loginTitle}>Registro</Text>
-        
-        <Text style={styles.label}>Nome</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nome"
-          value={name}
-          onChangeText={setName}
-        />
+      <Text style={styles.stepTitle}>Etapa 1</Text>
+      <View style={styles.stepDivider} />
 
+      <View style={styles.formBox}>
         <Text style={styles.label}>CPF</Text>
         <TextInput
           style={styles.input}
@@ -62,22 +49,9 @@ export default function LoginFirstScreen({ navigation }) {
           onChangeText={setBirthDate}
         />
 
-        <Text style={styles.label}>Tipo de Usuário</Text>
-        <View style={styles.userTypeContainer}>
-          <TouchableOpacity 
-            style={[styles.userTypeButton, userType === 'descartante' && styles.selectedUserType]} 
-            onPress={() => setUserType('descartante')}
-          />
-          <Text style={styles.userTypeText}>Descartante</Text>
-          
-          <TouchableOpacity 
-            style={[styles.userTypeButton, userType === 'coletor' && styles.selectedUserType]} 
-            onPress={() => setUserType('coletor')}
-          />
-          <Text style={styles.userTypeText}>Coletor</Text>
-        </View>
-        
-        <Button title="Prosseguir" onPress={handleRegister} />
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Prosseguir</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -86,25 +60,45 @@ export default function LoginFirstScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#83D07F',
+    paddingTop: 60,
   },
-  header: {
+  headerBox: {
+    backgroundColor: '#ffffff',
+    width: '90%',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 20,
   },
   image: {
-    width: 60,
-    height: 60,
-    marginRight: 5,
+    width: 50,
+    height: 50,
+    marginRight: 10,
   },
-  text: {
-    fontSize: 34,
+  headerText: {
+    fontSize: 28,
+    fontWeight: 'bold',
     color: '#0D0D0D',
   },
-  loginBox: {
+  stepTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  stepDivider: {
+    width: '25%',
+    height: 2,
+    backgroundColor: '#FFFFFF',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  formBox: {
     backgroundColor: '#ffffff',
     width: '90%',
     padding: 20,
@@ -114,12 +108,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-  },
-  loginTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
   },
   label: {
     fontWeight: 'bold',
@@ -133,25 +121,16 @@ const styles = StyleSheet.create({
     borderColor: '#ced4da',
     borderRadius: 5,
   },
-  userTypeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 10,
+  button: {
+    backgroundColor: '#83D07F',
+    paddingVertical: 10,
+    borderRadius: 5,
     alignItems: 'center',
+    marginTop: 20,
   },
-  userTypeButton: {
-    width: 30,  
-    height: 30,
-    borderRadius: 15, 
-    borderWidth: 2,
-    borderColor: '#ced4da',
-    backgroundColor: '#ffffff',
-    marginHorizontal: 10,
-  },
-  selectedUserType: {
-    backgroundColor: '#83D07F', 
-  },
-  userTypeText: {
-    fontWeight: 'bold', 
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

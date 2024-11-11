@@ -62,27 +62,10 @@ async function getUserById(idUser){
     return user;
 }
 
-async function validateUsuario(email, senhaUsuario) {
-
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(senhaUsuario, salt);
-
-    const connection = await mysql.createConnection(databaseConfig);
-    
-    const [usuario] = await connection.query("SELECT * FROM usuario WHERE email = ?", [email]);
-
-    if (bcrypt.compareSync(senhaUsuario, passwordHash) == true && usuario[0].email == email) {
-
-        return usuario;
-    };
-
-}
-
 module.exports = {
     getAllUser,
     createUser,
     updateUser,
     deleteUser,
     getUserById,
-    validateUsuario,
 };

@@ -93,53 +93,6 @@ async function getUserById(req, res) {
   }
 }
 
-async function validateLogin(req, res) {
-
-  try {
-    const {email, senhaUsuario} = req.body;
-    
-    const usuarioValidado = await usuarioService.validateUsuario(email, senhaUsuario);
-
-    const usuarioId = usuarioValidado[0].id
-    console.log(usuarioId)
-
-    const token = jwt.sign({ usuarioId }, SECRET);
-    res.status(200).json({ auth: true, token});
-  } catch (error) {
-    res.status(401).send({
-      message: "Error getting user!",
-      body: error.message,
-    })
-  }
-}
-
-
-function verifyJWT (req, res, next) {
-
-  console.log("verificando")
-  const tokenHeader = req.headers["authorization"];
-  const token = tokenHeader && tokenHeader.split(" ")[1];
-
-  if(!token) {
-    console.log("nao autorizou")
-    return res.status(401).json({ message: "Não autorizado :(" })
-  }
-
-  try {
-
-    console.log("chegou aqui")
-    jwt.verify(token, SECRET);
-    next();
-
-  }catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Token não válido"
-    })
-  }
-
-}
-
 
 const rotaOK = async (req, res) => {
   console.log("testando a rota")
@@ -152,8 +105,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  getUserById,
-  validateLogin,
-  verifyJWT,
-  rotaOK,
+  getUserById
 };

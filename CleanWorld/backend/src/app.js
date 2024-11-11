@@ -2,9 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const userRouter = require("./router/userRouter");
 const collectorRouter = require("./router/collectorRouter");
-const descartanteRouter = require("./router/descartanteRouter");
+const loginRouter = require("./router/loginRouter");
 const cors = require("cors");
-
 
 const port = 8000;
 const app = express();
@@ -17,11 +16,8 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api", userRouter);
-
 app.use("/api", collectorRouter);
-
-app.use("/api", descartanteRouter);
-
+app.use("/api", loginRouter);
 
 app.listen(port, () => {
     console.log(`Servidor rodando: http://localhost:${port}`);

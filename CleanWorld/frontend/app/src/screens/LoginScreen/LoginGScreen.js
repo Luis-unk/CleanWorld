@@ -1,39 +1,59 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 
 export default function LoginGScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleLogin = async () => {
-    try{
+    setLoading(true);
+    setError('');
+    if (!email || !password) {
+      setError('Por favor, preencha todos os campos.');
+      setLoading(false);
+      return;
+    }
+    
+    try {
       const response = await axios.post("http://localhost:8000/api/login", {
         email,
-        password
-      })
+        password,
+      });
+      if (response.status === 200) {
+        navigation.navigate('Home'); // Ajuste o nome da rota conforme necessário
+      }
+    } catch (err) {
+      setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
+    } finally {
+      setLoading(false);
     }
-    catch{}
-    console.log('Usuário:', email);
-    console.log('Senha:', password);
   };
 
-  const handleForgotPassword = () => {
-    console.log('Esqueceu a senha?');
+  const handleRegisterZero = () => {
+    // Navegar para a tela RegisterZeroScreen
+    navigation.navigate('Pre-registro'); // Altere o nome da rota conforme necessário
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image 
-          source={{ uri: '/assets/—Pngtree—green leaves vector icon design_5224035.png' }} 
-          style={styles.image}
-        />
-        <Text style={styles.text}>CleanWorld</Text>
+        <View style={styles.headerContent}>
+
+
+          <Image 
+            source={require('../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
+            style={styles.image}
+          />
+          <Text style={styles.text}>CleanWorld</Text>
+        </View>
       </View>
 
       <View style={styles.loginBox}>
         <Text style={styles.loginTitle}>Login</Text>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
         
         <Text style={styles.label}>Email</Text>
         <TextInput
@@ -52,11 +72,17 @@ export default function LoginGScreen({ navigation }) {
           secureTextEntry
         />
 
-        <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+        {loading ? (
+          <ActivityIndicator size="large" color="#007BFF" />
+        ) : (
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterZero}>
+          <Text style={styles.buttonText}>Cadastra-se</Text>
         </TouchableOpacity>
-        
-        <Button title="Login" onPress={handleLogin} />
       </View>
     </View>
   );
@@ -65,14 +91,18 @@ export default function LoginGScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#83D07F',
   },
   header: {
+    backgroundColor: '#ffffff', // Cor de fundo branco para o cabeçalho
+    width: '100%',
+    paddingVertical: 20,
+    alignItems: 'center',
+    elevation: 5, // Sombra para o cabeçalho
+  },
+  headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
   },
   image: {
     width: 60,
@@ -93,6 +123,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
+    marginTop: 150, // Margem superior para separar o login do cabeçalho
+    alignSelf: 'center', // Centralizar o bloco de login na largura
   },
   loginTitle: {
     fontSize: 28,
@@ -112,10 +144,27 @@ const styles = StyleSheet.create({
     borderColor: '#ced4da',
     borderRadius: 5,
   },
-  forgotPassword: {
-    color: '#007BFF',
-    textDecorationLine: 'underline',
-    marginVertical: 10,
+  loginButton: {
+    backgroundColor: '#83D07F', // Cor de fundo do botão de login
+    paddingVertical: 5, // Ajustado para o mesmo tamanho
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10, // Espaço entre os botões
+  },
+  registerButton: {
+    backgroundColor: '#83D07F', // Cor de fundo do botão de cadastro
+    paddingVertical: 5, // Ajustado para o mesmo tamanho
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF', // Cor do texto dos botões
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
     textAlign: 'center',
   },
 });
