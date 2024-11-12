@@ -1,1 +1,1 @@
-export * from "./DiscardingProfileScreen"
+export * from "./DiscardingProfile"

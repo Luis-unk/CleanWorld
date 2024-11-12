@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import axios from "axios";
 
-export default function LoginSecondScreen({ navigation , route}) {
+export default function RegisterUserTwo({ navigation , route}) {
   const {name, cpf, phone, birthDate, userType} = route.params;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ export default function LoginSecondScreen({ navigation , route}) {
     <View style={styles.container}>
       <View style={styles.headerContent}>
           <Image 
-            source={require('../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
+            source={require('../../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
             style={styles.image}
           />
           <Text style={styles.text}>CleanWorld</Text>

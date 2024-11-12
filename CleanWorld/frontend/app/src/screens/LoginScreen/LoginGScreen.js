@@ -23,7 +23,8 @@ export default function LoginGScreen({ navigation }) {
         password,
       });
       if (response.status === 200) {
-        navigation.navigate('Home'); // Ajuste o nome da rota conforme necessário
+        navigation.navigate('Home');  // aqui ficara o futuro nome do tab do Home 
+                                      //onde ficara o perfil do discartante ou do usuario que fara o pedifo
       }
     } catch (err) {
       setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
@@ -32,9 +33,8 @@ export default function LoginGScreen({ navigation }) {
     }
   };
 
-  const handleRegisterZero = () => {
-    // Navegar para a tela RegisterZeroScreen
-    navigation.navigate('Pre-registro'); // Altere o nome da rota conforme necessário
+  const handlePreRegister = () => {
+    navigation.navigate('Pre-registro');
   };
 
   return (
@@ -80,7 +80,7 @@ export default function LoginGScreen({ navigation }) {
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterZero}>
+        <TouchableOpacity style={styles.registerButton} onPress={handlePreRegister}>
           <Text style={styles.buttonText}>Cadastra-se</Text>
         </TouchableOpacity>
       </View>

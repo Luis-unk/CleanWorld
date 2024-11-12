@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export default function RegisterFirstScreen({ navigation, route }) {
+export default function RegisterUserOne({ navigation, route }) {
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const { name, userType } = route.params;
 
   const handleRegister = () => {  
-    navigation.navigate("RegisterSecondScreen", { name, cpf, phone, birthDate, userType });
+    navigation.navigate("RegisterUserTwo", { name, cpf, phone, birthDate, userType });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerBox}>
         <Image 
-          source={require('../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
+          source={require('../../../../assets/—Pngtree—green leaves vector icon design_5224035.png')}
+ 
           style={styles.image}
         />
         <Text style={styles.headerText}>CleanWorld</Text>

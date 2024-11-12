@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-export default function RegisterZeroScreen({ navigation }) {
+export default function PreRegister({ navigation }) {
   const [empresa, setEmpresa] = useState('');
   const [name, setname] = useState('');
   const [userType, setUserType] = useState(0); // 0: Pessoa Física, 1: Empresa
 
-  const handleRegisterZero = () => {
+  const handlePreRegister = () => {
     if (userType === 1 && empresa.trim() !== '') {
-
+      // Se for empresa e o campo não estiver vazio
       console.log(userType);
-      navigation.navigate("RegisterSecondScreen", { empresa, userType });
+      navigation.navigate("RegisterUserTwo", { empresa, userType });
     } else if (userType === 0 && name.trim() !== '') {
-
+      // Se for pessoa física e o campo não estiver vazio
       console.log(userType);
-      navigation.navigate("Register", { name, userType });
+      navigation.navigate("RegisterUserOne", { name, userType });
     } else {
       alert('Por favor, preencha o campo correspondente antes de prosseguir.');
     }
@@ -85,7 +85,7 @@ export default function RegisterZeroScreen({ navigation }) {
           </>
         )}
 
-        <TouchableOpacity style={styles.button} onPress={handleRegisterZero}>
+        <TouchableOpacity style={styles.button} onPress={handlePreRegister}>
           <Text style={styles.buttonText}>Próximo</Text>
         </TouchableOpacity>
       </View>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#83D07F',
   },
   inactiveToggle: {
-    backgroundColor: '#D3D3D3',
+    backgroundColor: '#f5f5f5',
   },
   toggleText: {
     fontWeight: 'bold',

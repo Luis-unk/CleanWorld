@@ -1,13 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginGScreen from '../screens/LoginScreen/LoginGScreen';
-import DiscardListScreen from '../screens/DiscardList/DiscardList';
-import DiscardingProfileScreen from '../screens/DiscardingProfile/DiscardingProfile';
-import RegisterFirstScreen from '../screens/RegisterScreen/RegisterFirstScreen';
-import RegisterSecondScreen from '../screens/RegisterScreen/RegisterSecondScreen';
-import RegisterZeroScreen from '../screens/RegisterScreen/RegisterZeroScreen';
+import RegisterUserTwo from '../screens/RegisterScreen/RegisterUser/RegisterUserTwo';
+import RegisterUserOne from '../screens/RegisterScreen/RegisterUser/RegisterUserOne';
+import PreRegister from '../screens/RegisterScreen/PreRegister';
 import { Ionicons } from '@expo/vector-icons'; 
+
 import { View, Text, Image, StyleSheet } from 'react-native';
+import DiscardingProfile from '../screens/DiscardingProfile/DiscardingProfile';
 
 export default function BottomTabsNavigator() {
   const Tab = createBottomTabNavigator();
@@ -17,12 +17,12 @@ export default function BottomTabsNavigator() {
       <Tab.Navigator
         initialRouteName="Login"
         screenOptions={({ route }) => ({
+          tabBarActiveTintColor: '#FFFFFF',
+          tabBarInactiveTintColor: '#000000',
           tabBarStyle: {
             display: route.name === 'Login' || route.name === 'Pre-registro' || route.name === 'Register' || route.name === 'RegisterSecondScreen' ? 'none' : 'flex', // Oculta abas em Login e RegisterZeroScreen
             backgroundColor: '#83D07F',
-          },
-          tabBarActiveTintColor: '#FFFFFF',
-          tabBarInactiveTintColor: '#000000',
+          }
         })}
       >
         <Tab.Screen
@@ -30,30 +30,31 @@ export default function BottomTabsNavigator() {
           component={LoginGScreen}
           options={{
             headerShown: false,
-            tabBarButton: () => null, // Torna a aba de login invisível e inativa
+            tabBarButton: () => null,
           }}
         />
+        
 
         <Tab.Screen
           name="Pre-registro"
-          component={RegisterZeroScreen}
+          component={PreRegister}
           options={{
             headerShown: false,
-            tabBarButton: () => null, // Torna a aba de pré-registro invisível e inativa
+            tabBarButton: () => null,
           }}
         />
 
         <Tab.Screen
-          name="Register"
-          component={RegisterFirstScreen}
+          name="RegisterUserOne"
+          component={RegisterUserOne}
           options={{
             headerShown: false,
             tabBarButton: () => null,
           }}
         />
         <Tab.Screen
-          name="RegisterSecondScreen"
-          component={RegisterSecondScreen}
+          name="RegisterUserTwo"
+          component={RegisterUserTwo}
           options={{
             headerShown: false,
             tabBarButton: () => null, // Torna a aba de pré-registro invisível e inativa
@@ -61,26 +62,19 @@ export default function BottomTabsNavigator() {
         />
         <Tab.Screen
           name="Ola, Usuario"
-          component={DiscardingProfileScreen}
+          component={DiscardingProfile}
           options={{
             headerStyle: {
               backgroundColor: '#83D07F',
             },
-            headerTitle: () => <HeaderTitle />,
+    
             tabBarIcon: ({ color }) => (
               <Ionicons name="person" size={24} color={color} />
             ),
           }}
         />
-        <Tab.Screen
-          name="DiscardList"
-          component={DiscardListScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <Ionicons name="list" size={24} color={color} />
-            ),
-          }}
-        />
+        
+      
       </Tab.Navigator>
     </NavigationContainer>
   );
