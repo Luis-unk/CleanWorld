@@ -6,7 +6,7 @@ export default function LoginSecondScreen({ navigation , route}) {
   const {name, cpf, phone, birthDate, userType} = route.params;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  LoginGScreen
+
 
   const handleRegister = async () => {  
     try {
