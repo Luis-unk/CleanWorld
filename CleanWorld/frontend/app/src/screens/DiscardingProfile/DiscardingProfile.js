@@ -7,6 +7,8 @@ export default function DiscardingProfile({ navigation }) {
   const [phone, setPhone] = useState('');
   const [birthDate, setBirthDate] = useState('');
 
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>

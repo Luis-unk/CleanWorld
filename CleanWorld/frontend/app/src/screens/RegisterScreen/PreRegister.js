@@ -25,7 +25,7 @@ export default function PreRegister({ navigation }) {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image 
-            source={require('../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
+            source={require('../../../assets/logo.png')} 
             style={styles.image}
           />
           <Text style={styles.text}>CleanWorld</Text>

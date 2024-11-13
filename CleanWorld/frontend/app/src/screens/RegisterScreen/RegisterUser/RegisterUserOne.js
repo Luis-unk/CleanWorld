@@ -15,7 +15,7 @@ export default function RegisterUserOne({ navigation, route }) {
     <View style={styles.container}>
       <View style={styles.headerBox}>
         <Image 
-          source={require('../../../../assets/—Pngtree—green leaves vector icon design_5224035.png')}
+          source={require('../../../../assets/logo.png')}
  
           style={styles.image}
         />

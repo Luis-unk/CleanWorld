@@ -20,7 +20,7 @@ export default function BottomTabsNavigator() {
           tabBarActiveTintColor: '#FFFFFF',
           tabBarInactiveTintColor: '#000000',
           tabBarStyle: {
-            display: route.name === 'Login' || route.name === 'Pre-registro' || route.name === 'Register' || route.name === 'RegisterSecondScreen' ? 'none' : 'flex', // Oculta abas em Login e RegisterZeroScreen
+            display: route.name === 'Login' || route.name === 'Pre-registro' || route.name === 'RegisterUserOne' || route.name === 'RegisterUserTwo' ? 'none' : 'flex', // Oculta abas em Login e RegisterZeroScreen
             backgroundColor: '#83D07F',
           }
         })}

@@ -23,8 +23,7 @@ export default function LoginGScreen({ navigation }) {
         password,
       });
       if (response.status === 200) {
-        navigation.navigate('Home');  // aqui ficara o futuro nome do tab do Home 
-                                      //onde ficara o perfil do discartante ou do usuario que fara o pedifo
+        navigation.navigate('Home'); // Ajuste o nome da rota conforme necessário
       }
     } catch (err) {
       setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
@@ -34,7 +33,8 @@ export default function LoginGScreen({ navigation }) {
   };
 
   const handlePreRegister = () => {
-    navigation.navigate('Pre-registro');
+    // Navegar para a tela RegisterZeroScreen
+    navigation.navigate('Pre-registro'); // Altere o nome da rota conforme necessário
   };
 
   return (
@@ -44,7 +44,7 @@ export default function LoginGScreen({ navigation }) {
 
 
           <Image 
-            source={require('../../../assets/—Pngtree—green leaves vector icon design_5224035.png')} 
+            source={require('../../../assets/logo.png')} 
             style={styles.image}
           />
           <Text style={styles.text}>CleanWorld</Text>
