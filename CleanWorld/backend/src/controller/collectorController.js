@@ -13,9 +13,9 @@ async function getAllCollector(req, res){
 }
 
 async function createCollector(req, res){
-    const{nameEnterprise, cnpj, phone,userType, email, password} = req.body;
+    const{nameEnterprise, cnpj, phone, userType, email, password} = req.body;
     try{
-        await collectorService.createCollector(nameEnterprise, cnpj, phone,userType, email, password);
+        await collectorService.createCollector(nameEnterprise, cnpj, phone, userType, email, password);
         res.status(201).json({message:"Sucess"});
     }catch(error){
         res.status(500).send({
@@ -25,11 +25,13 @@ async function createCollector(req, res){
     }
 }
 
-async function updatecoletor(req, res){
+async function updateCollector(req, res){
     try{
-        const {id}=req.params;
-        const {tipoColetor, peso, id_usuario} = req.params;
-        await coletorService.updateColetor(id, tipoColetor, peso, id_usuario);
+        const {idCollector}=req.params;
+        const {nameEnterprise, phone, password} = req.body;
+
+        await collectorService.updateCollector(idCollector, nameEnterprise, phone, password);
+        
         res.status(201).json({message: "Sucess"});    
     }catch(error){
         res.status(500).send({
@@ -39,11 +41,11 @@ async function updatecoletor(req, res){
     }
 }
 
-async function deleteColetor(req, res){
+async function deleteCollector(req, res){
     try{
-        const {id} = req.params;
+        const {idCollector} = req.params;
 
-        await coletorService.deleteColetor(id);
+        await collectorService.deleteCollector(idCollector);
 
         res.status(201).json({ message: "Sucess" });
     }catch(error){
@@ -54,11 +56,11 @@ async function deleteColetor(req, res){
     }
 }
 
-async function getColetorById(req, res){
+async function getCollectorById(req, res){
     try{
-        const {id} = req.params;
+        const {idCollector} = req.params;
 
-        const coletor = await coletorService.getAllColetorById(id);
+        const coletor = await collectorService.getAllColetorById(idCollector);
 
         res.status(200).json(coletor);
     }catch(error){
@@ -73,7 +75,7 @@ async function getColetorById(req, res){
 module.exports = {
     getAllCollector,
     createCollector,
-    updatecoletor,
-    deleteColetor,
-    getColetorById,
+    updateCollector,
+    deleteCollector,
+    getCollectorById,
 }

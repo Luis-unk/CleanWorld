@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 export default function LoginGScreen({ navigation }) {
@@ -22,8 +23,13 @@ export default function LoginGScreen({ navigation }) {
         email,
         password,
       });
-      if (response.status === 200) {
-        navigation.navigate('Home'); // Ajuste o nome da rota conforme necessário
+      const { token } = response.data;
+      if (token) {
+        await AsyncStorage.setItem('userToken', token);
+        console.log("Token armazenado: ", token)
+        navigation.navigate('DiscardingProfile', token); // Ajuste o nome da rota conforme necessário
+      } else {
+        console.log("Token não recebido")
       }
     } catch (err) {
       setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.');

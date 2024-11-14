@@ -3,11 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginGScreen from '../screens/LoginScreen/LoginGScreen';
 import RegisterUserTwo from '../screens/RegisterScreen/RegisterUser/RegisterUserTwo';
 import RegisterUserOne from '../screens/RegisterScreen/RegisterUser/RegisterUserOne';
+import DiscardingProfile from '../screens/DiscardingProfile/DiscardingProfile';
 import PreRegister from '../screens/RegisterScreen/PreRegister';
+import RegisterEnterpriseOne from '../screens/RegisterScreen/RegisterEnterprise/RegisterEnterpriseOne';
+import RegisterEnterpriseTwo from '../screens/RegisterScreen/RegisterEnterprise/RegisterEnterpriseTwo';
 import { Ionicons } from '@expo/vector-icons'; 
 
+
 import { View, Text, Image, StyleSheet } from 'react-native';
-import DiscardingProfile from '../screens/DiscardingProfile/DiscardingProfile';
+
 
 export default function BottomTabsNavigator() {
   const Tab = createBottomTabNavigator();
@@ -20,7 +24,7 @@ export default function BottomTabsNavigator() {
           tabBarActiveTintColor: '#FFFFFF',
           tabBarInactiveTintColor: '#000000',
           tabBarStyle: {
-            display: route.name === 'Login' || route.name === 'Pre-registro' || route.name === 'RegisterUserOne' || route.name === 'RegisterUserTwo' ? 'none' : 'flex', // Oculta abas em Login e RegisterZeroScreen
+            display: route.name === 'Login' || route.name === 'Pre-registro' || route.name === 'RegisterUserOne' || route.name === 'RegisterUserTwo' || route.name === 'RegisterEnterpriseOne' || route.name === 'RegisterEnterpriseTwo' ? 'none' : 'flex', // Oculta abas em Login e RegisterZeroScreen
             backgroundColor: '#83D07F',
           }
         })}
@@ -60,21 +64,34 @@ export default function BottomTabsNavigator() {
             tabBarButton: () => null, // Torna a aba de pré-registro invisível e inativa
           }}
         />
+
         <Tab.Screen
-          name="Ola, Usuario"
-          component={DiscardingProfile}
+          name="RegisterEnterpriseOne"
+          component={RegisterEnterpriseOne}
           options={{
-            headerStyle: {
-              backgroundColor: '#83D07F',
-            },
-    
-            tabBarIcon: ({ color }) => (
-              <Ionicons name="person" size={24} color={color} />
-            ),
+            headerShown: false,
+            tabBarButton: () => null, // Torna a aba de pré-registro invisível e inativa
           }}
         />
-        
-      
+
+
+        <Tab.Screen
+          name="RegisterEnterpriseTwo"
+          component={RegisterEnterpriseTwo}
+          options={{
+            headerShown: false,
+            tabBarButton: () => null, // Torna a aba de pré-registro invisível e inativa
+          }}
+        />
+        <Tab.Screen
+          name="DiscardingProfile"
+          component={DiscardingProfile}
+          options={{
+            headerShown: false,
+            tabBarButton: () => null,
+          }}
+        />
+
       </Tab.Navigator>
     </NavigationContainer>
   );

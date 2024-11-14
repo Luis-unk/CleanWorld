@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 export default function PreRegister({ navigation }) {
-  const [empresa, setEmpresa] = useState('');
-  const [name, setname] = useState('');
+  const [nameEnterprise, setnameEnterprise] = useState('');
+  const [name, setname] = useState('')
   const [userType, setUserType] = useState(0); // 0: Pessoa Física, 1: Empresa
 
   const handlePreRegister = () => {
-    if (userType === 1 && empresa.trim() !== '') {
+    if (userType === 1 && nameEnterprise.trim() !== '') {
       // Se for empresa e o campo não estiver vazio
       console.log(userType);
-      navigation.navigate("RegisterUserTwo", { empresa, userType });
+      navigation.navigate("RegisterEnterpriseOne", { nameEnterprise, userType });
     } else if (userType === 0 && name.trim() !== '') {
       // Se for pessoa física e o campo não estiver vazio
       console.log(userType);
@@ -40,7 +40,7 @@ export default function PreRegister({ navigation }) {
           style={[styles.toggleButton, userType === 0 ? styles.activeToggle : styles.inactiveToggle]}
           onPress={() => {
             setUserType(0);
-            setEmpresa(''); // Limpa o campo da empresa se selecionar pessoa física
+            setnameEnterprise(''); // Limpa o campo da empresa se selecionar pessoa física
           }}
         >
           <Text style={[styles.toggleText, userType === 0 ? styles.activeText : styles.inactiveText]}>
@@ -67,8 +67,8 @@ export default function PreRegister({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Digite o nome da empresa"
-              value={empresa}
-              onChangeText={setEmpresa}
+              value={nameEnterprise}
+              onChangeText={setnameEnterprise}
             />
           </>
         )}
