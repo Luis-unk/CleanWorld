@@ -26,10 +26,10 @@ export default function RegisterEnterpriseOne({ navigation, route }) {
       <View style={styles.stepDivider} />
 
       <View style={styles.formBox}>
-        <Text style={styles.label}>cnpj</Text>
+        <Text style={styles.label}>CNPJ</Text>
         <TextInput
           style={styles.input}
-          placeholder="Cnpj"
+          placeholder="00.000.000/0001-00"
           value={cnpj}
           onChangeText={setcnpj}
         />
@@ -37,7 +37,7 @@ export default function RegisterEnterpriseOne({ navigation, route }) {
         <Text style={styles.label}>Telefone</Text>
         <TextInput
           style={styles.input}
-          placeholder="Telefone"
+          placeholder="47 9900-0000"
           value={phone}
           onChangeText={setPhone}
         />

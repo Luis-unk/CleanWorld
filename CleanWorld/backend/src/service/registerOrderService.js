@@ -11,32 +11,44 @@ async function getAllRegisterOrder(){
     return rows;
 }
 
-async function createRegisterOrder(descricaoMaterial, qtdVolumes, dataColeta, tamanhoVolume, horarioColeta){
+async function createRegisterOrder(quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector){
+
     const connection = await mysql.createConnection(databaseConfig);
 
-    const insertRegisterOrder = "INSERT INTO RegisterOrder(descricaoMaterial, qtdVolumes, dataColeta, tamanhoVolume, horarioColeta) VALUES (?,?,?,?,?)";
+    const insertRegisterOrder = "INSERT INTO RegisterOrder(quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector) VALUES (?,?,?,?,?,?,?,?)";
 
-    await connection.query(insertRegisterOrder, [descricaoMaterial, qtdVolumes, dataColeta, tamanhoVolume, horarioColeta])
+    await connection.query(insertRegisterOrder, [quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector])
 
     await connection.end();
 }
 
-async function updateRegisterOrder(id, descricaoMaterial, qtdVolumes, dataColeta, tamanhoVolume, horarioColeta){
+async function updateRegisterOrder(idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector){
     const connection = await mysql.createConnection(databaseConfig);
     
-    const updateRegisterOrder = "UPDATE RegisterOrder SET id = ?, descricaoMaterial = ?, qtdVolumes = ?, dataColeta = ?, tamanhoVolume = ?, horarioColeta = WHERE id = ?";
+    const updateRegisterOrder = "UPDATE RegisterOrder SET idRegisterOrder = ?, quantityVolume = ?, volumeSize = ?, collectionDate = ?, collectionTime = ?, materialDescription = ?, status = ?, idUser = ?, idCollector = ? WHERE idRegisterOrder = ?";
 
-    await connection.query(updateRegisterOrder,[id, descricaoMaterial, qtdVolumes, dataColeta, tamanhoVolume, horarioColeta]);
+    await connection.query(updateRegisterOrder,[idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector]);
 
     await connection.end();
 }
 
-async function deleteRegisterOrder (id){
+async function deleteRegisterOrder (idRegisterOrder){
     const connection = mysql.createConnection(databaseConfig);
 
-    await connection.query("DELETE FROM RegisterOrder WHERE id = ?", [id])
+    await connection.query("DELETE FROM RegisterOrder WHERE idRegisterOrder = ?", [idRegisterOrder])
 
     await connection.end();
+}
+
+async function getRegisterOrderById(idCollector){
+    
+    const connection = await mysql.createConnection(databaseConfig);
+
+    const [coletor] = await connection.query(`SELECT * FROM RegisterOrder WHERE idCollector = ?`, [idCollector]);
+
+    await connection.end();
+    
+    return coletor;
 }
 
 module.exports = {
@@ -44,5 +56,6 @@ module.exports = {
     createRegisterOrder,
     updateRegisterOrder,
     deleteRegisterOrder,
+    getRegisterOrderById
 };
 

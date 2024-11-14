@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import axios from "axios";
 
-export default function RegisterEnterpriseTwo({ navigation , route}) {
-  const {name, cpf, phone, birthDate, userType} = route.params;
+export default function RegisterEnterpriseTwo({ navigation, route }) {
+  const { nameEnterprise, cnpj, phone, userType } = route.params;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
-  const handleRegister = async () => {  
+  const handleRegister = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/api/user", {
-        name,
-        cpf, 
-        phone, 
-        birthDate,
-        userType, 
+      const response = await axios.post("http://localhost:8000/api/collector", {
+        nameEnterprise,
+        cnpj,
+        phone,
+        userType,
         email,
         password
       });
       console.log(response.data);
       navigation.navigate("Login");
-  
     } catch (error) {
       console.error('Erro ao registrar usuário:', error);
     }
   };
+  const handleEnterpriseOne = () => {
+    navigation.navigate('Pre-registro'); // Certifique-se de que 'RegisterEnterpriseOne' é o nome exato da rota
+  };
+  
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContent}>
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
           <Image 
             source={require('../../../../assets/logo.png')} 
             style={styles.image}
           />
-          <Text style={styles.text}>CleanWorld</Text>
+          <Text style={styles.headerText}>CleanWorld</Text>
         </View>
+      </View>
 
+      {/* Texto "Etapa 2" com linha abaixo, centralizado no fundo verde */}
+      <View style={styles.stepContainer}>
+        <Text style={styles.stepText}>Etapa 2</Text>
+        <View style={styles.stepLine} />
+      </View>
+
+      {/* Conteúdo da tela de registro */}
       <View style={styles.loginBox}>
         <Text style={styles.loginTitle}>Registro</Text>
         
@@ -54,11 +64,20 @@ export default function RegisterEnterpriseTwo({ navigation , route}) {
           placeholder="Senha"
           value={password}
           onChangeText={setPassword}
+          secureTextEntry
         />
         
-        <Button title="Finalizar Cadastro" 
-        onPress={handleRegister} />
+        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Finalizar Cadastro</Text>
+        </TouchableOpacity>
       </View>
+
+      {/* Botão de voltar em bloco branco à esquerda, abaixo do bloco principal */}
+      <TouchableOpacity style={styles.backButtonContainer} onPress={handleEnterpriseOne}>
+        <View style={styles.backButton}>
+          <Text style={styles.backButtonText}>Voltar</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -66,9 +85,17 @@ export default function RegisterEnterpriseTwo({ navigation , route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#83D07F',
+    alignItems: 'center',
+  },
+  header: {
+    backgroundColor: '#ffffff',
+    width: '100%',
+    paddingVertical: 20,
+    alignItems: 'center',
+    elevation: 5,
+    position: 'absolute',
+    top: 0,
   },
   headerContent: {
     flexDirection: 'row',
@@ -79,9 +106,24 @@ const styles = StyleSheet.create({
     height: 60,
     marginRight: 5,
   },
-  text: {
+  headerText: {
     fontSize: 34,
     color: '#0D0D0D',
+  },
+  stepContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+    marginTop: 100,
+  },
+  stepText: {
+    fontSize: 24,
+    color: '#FFFFFF',
+  },
+  stepLine: {
+    width: '25%',
+    height: 2,
+    backgroundColor: '#FFFFFF',
+    marginTop: 5,
   },
   loginBox: {
     backgroundColor: '#ffffff',
@@ -92,7 +134,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 6
+    elevation: 6,
+    marginTop: 20,
   },
   loginTitle: {
     fontSize: 28,
@@ -111,6 +154,36 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ced4da',
     borderRadius: 5,
-    marginBottom: 20
+    marginBottom: 20,
+  },
+  registerButton: {
+    backgroundColor: '#83D07F',
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  backButtonContainer: {
+    position: 'absolute',
+    left: 20,
+    bottom: 40,
+    marginTop: 145,
+    alignItems: 'center',
+  },
+  backButton: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 5,
+  },
+  backButtonText: {
+    color: '#83D07F',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

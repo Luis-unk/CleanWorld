@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const registerOrderController = require("../controller/registerOrderController.js");
 
-router.get("/registerOrder", registerOrderController.getAllregisterOrder);
-router.post("/registerOrder", registerOrderController.createregisterOrder);
-router.put("/registerOrder", registerOrderController.updateregisterOrder);
-router.delete("/registerOrder", registerOrderController.deleteregisterOrder);
+router.get("/registerOrder", registerOrderController.getAllRegisterOrder);
+router.get("/registerOrder/:idRegisterOrder", registerOrderController.getRegisterOrderById);
+router.post("/registerOrder", registerOrderController.createRegisterOrder);
+router.put("/registerOrder/:idRegisterOrder", registerOrderController.updateRegisterOrder);
+router.delete("/registerOrder/:idRegisterOrder", registerOrderController.deleteRegisterOrder);
+
 module.exports = router;

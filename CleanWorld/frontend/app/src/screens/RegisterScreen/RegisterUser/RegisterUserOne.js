@@ -29,7 +29,7 @@ export default function RegisterUserOne({ navigation, route }) {
         <Text style={styles.label}>CPF</Text>
         <TextInput
           style={styles.input}
-          placeholder="CPF"
+          placeholder="000.000.000-00"
           value={cpf}
           onChangeText={setCpf}
         />
@@ -37,7 +37,7 @@ export default function RegisterUserOne({ navigation, route }) {
         <Text style={styles.label}>Telefone</Text>
         <TextInput
           style={styles.input}
-          placeholder="Telefone"
+          placeholder="47 9900-0000"
           value={phone}
           onChangeText={setPhone}
         />

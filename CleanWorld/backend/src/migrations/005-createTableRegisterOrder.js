@@ -17,7 +17,7 @@ async function createTableRegisterOrder(){
         materialDescription VARCHAR(100),
         status INT NOT NULL,
         idUser INT,
-        idCollector INT,
+        idCollector INT NULL,
         FOREIGN KEY (idUser) REFERENCES user(idUser),
         FOREIGN KEY (idCollector) REFERENCES Collector(idCollector)
         );`);
