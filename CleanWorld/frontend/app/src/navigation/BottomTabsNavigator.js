@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginGScreen from '../screens/LoginScreen/LoginGScreen';
 import RegisterUserTwo from '../screens/RegisterScreen/RegisterUser/RegisterUserTwo';
 import RegisterUserOne from '../screens/RegisterScreen/RegisterUser/RegisterUserOne';
-import DiscardingProfile from '../screens/DiscardingProfile/DiscardingProfile';
+import DiscardingProfile from '../screens/Profile/DiscardingProfile/DiscardingProfile';
 import PreRegister from '../screens/RegisterScreen/PreRegister';
 import RegisterEnterpriseOne from '../screens/RegisterScreen/RegisterEnterprise/RegisterEnterpriseOne';
 import RegisterEnterpriseTwo from '../screens/RegisterScreen/RegisterEnterprise/RegisterEnterpriseTwo';
@@ -11,6 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 import { View, Text, Image, StyleSheet } from 'react-native';
+import EnterpriseProfile from '../screens/Profile/CollectorProfile/EnterpriseProfile';
+import RegisterVehicle from '../screens/EnterpriseScreen/RegisterVehicle';
 
 
 export default function BottomTabsNavigator() {
@@ -89,6 +91,23 @@ export default function BottomTabsNavigator() {
           options={{
             headerShown: false,
             tabBarButton: () => null,
+          }}
+        />
+
+        <Tab.Screen
+          name="EnterpriseProfile"
+          component={EnterpriseProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+
+        <Tab.Screen
+          name="RegisterVehicle"
+          component={RegisterVehicle}
+          options={{
+            headerShown: false,
           }}
         />
 

@@ -11,12 +11,12 @@ async function createTableRegisterOrder(){
     await connection.query(`CREATE TABLE IF NOT EXISTS registerOrder(
         idRegisterOrder INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         quantityVolume INT NOT NULL,
-        volumeSize INT NOT NULL,
+        volumeSize VARCHAR(255) NOT NULL,
         collectionDate DATE NOT NULL,
-        collectionTime TIME,
+        collectionTime TIME NOT NULL,
         materialDescription VARCHAR(100),
         status INT NOT NULL,
-        idUser INT,
+        idUser INT NOT NULL,
         idCollector INT NULL,
         FOREIGN KEY (idUser) REFERENCES user(idUser),
         FOREIGN KEY (idCollector) REFERENCES Collector(idCollector)

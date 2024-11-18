@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import * as jwtDecode from 'jwt-decode';
 
 export default function LoginGScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -23,20 +24,25 @@ export default function LoginGScreen({ navigation }) {
         email,
         password,
       });
-      const { token } = response.data;
-      if (token) {
-        await AsyncStorage.setItem('userToken', token);
-        console.log("Token armazenado: ", token)
-        navigation.navigate('DiscardingProfile', token); // Ajuste o nome da rota conforme necessário
+
+      const { token, userType, idUser } = response.data;
+
+      console.log(token , userType, "id", idUser)
+
+    if (token) {
+      await AsyncStorage.setItem('userToken', token);
+      if (userType === 0) {
+        navigation.navigate('DiscardingProfile', { token, idUser });
       } else {
-        console.log("Token não recebido")
+        navigation.navigate('EnterpriseProfile', { token, idUser });
       }
-    } catch (err) {
-      setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
-    } finally {
-      setLoading(false);
+    } else {
+      console.log("Token não recebido");
     }
-  };
+  } catch (error) {
+    console.error("Erro no login: ", error.response?.data || error.message);
+  }
+};
 
   const handlePreRegister = () => {
     // Navegar para a tela RegisterZeroScreen

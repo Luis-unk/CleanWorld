@@ -3,14 +3,14 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 import axios from "axios";
 
 export default function RegisterUserTwo({ navigation, route }) {
-  const { nameEnterprise, cpf, phone, birthDate, userType } = route.params;
+  const { name, cpf, phone, birthDate, userType } = route.params;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleRegister = async () => {
     try {
       const response = await axios.post("http://localhost:8000/api/user", {
-        nameEnterprise,
+        name,
         cpf,
         phone,
         birthDate,

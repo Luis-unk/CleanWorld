@@ -11,7 +11,7 @@ async function validateLogin(req, res) {
     const idUser = validatedUser[0].idUser
     const userType = validatedUser[0].userType
     const token = jwt.sign({ idUser, userType}, JWT_SECRET);
-    res.status(200).json({ auth: true, token});
+    res.status(200).json({ auth: true, token, userType, idUser});
   } catch (error) {
     res.status(401).send({
       message: "Error getting user!",
