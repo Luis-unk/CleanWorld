@@ -20,7 +20,7 @@ async function createTableRegisterOrder(){
         idCollector INT NULL,
         FOREIGN KEY (idUser) REFERENCES user(idUser),
         FOREIGN KEY (idCollector) REFERENCES Collector(idCollector)
-        );`);
+        )`);
     await connection.end();
     console.log(`Table registerOrder created`);
 

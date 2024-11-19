@@ -10,7 +10,7 @@ async function createTableRegisterVehicle(){
 
     await connection.query(`CREATE TABLE IF NOT EXISTS registerVehicle(
         idRegisterVehicle INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        volumeSize VARCHAR(255) NOT NULL,
+        volumeSize VARCHAR(100) NOT NULL,
         carBrand VARCHAR(45) NOT NULL,
         carModel VARCHAR(45) NOT NULL,
         carLicensePlate VARCHAR(45) NOT NULL,

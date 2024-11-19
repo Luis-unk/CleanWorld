@@ -25,7 +25,7 @@ async function createRegisterOrder(quantityVolume, volumeSize, collectionDate, c
 async function updateRegisterOrder(idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector){
     const connection = await mysql.createConnection(databaseConfig);
     
-    const updateRegisterOrder = "UPDATE RegisterOrder SET idRegisterOrder = ?, quantityVolume = ?, volumeSize = ?, collectionDate = STR_TO_DATE(?, '%d/%m/%Y'), collectionTime = ?, materialDescription = ?, status = ?, idUser = ?, idCollector = ? WHERE idRegisterOrder = ?";
+    const updateRegisterOrder = "UPDATE RegisterOrder SET quantityVolume = ?, volumeSize = ?, collectionDate = STR_TO_DATE(?, '%d/%m/%Y'), collectionTime = ?, materialDescription = ?, status = ?, idUser = ?, idCollector = ? WHERE idRegisterOrder = ?";
 
     await connection.query(updateRegisterOrder,[ quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector, idRegisterOrder]);
 
