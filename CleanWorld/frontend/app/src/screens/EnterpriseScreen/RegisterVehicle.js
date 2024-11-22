@@ -4,20 +4,25 @@ import axios from 'axios';
 
 export default function RegisterVehicle({ navigation }) {
   const [volumeSize, setVolumeSize] = useState(''); // Novo estado para rastrear a seleção
-  const [carbrand, setCarBrand] = useState('');
-  const [carmodel, setCarModel] = useState('');
-  const [carlicenceplate, setCarLicencePlate] = useState('');
+  const [carBrand, setcarBrand] = useState('');
+  const [carModel, setcarModel] = useState('');
+  const [carLicencePlate, setcarLicencePlate] = useState('');
   const [maximumweight, setMaximumWeight] = useState('');
 
   const handleSaveChanges = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/registerVehicle', {
+
+      console.log({ volumeSize, carBrand, carModel, carLicencePlate, maximumweight });
+
+      const response = await axios.post(`http://localhost:8000/registerVehicle`, {
         volumeSize,
-        carbrand,
-        carmodel,         
-        carlicenceplate,
+        carBrand,
+        carModel,         
+        carLicencePlate,
         maximumweight,
       });
+      console.log({ volumeSize, carBrand, carModel, carLicencePlate, maximumweight });
+
       console.log('Veículo cadastrado com sucesso:', response.data);
     } catch (error) {
       console.error('Erro ao salvar o veículo:', error);
@@ -91,24 +96,24 @@ export default function RegisterVehicle({ navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Ex: Toyota"
-          value={carbrand}
-          onChangeText={setCarBrand}
+          value={carBrand}
+          onChangeText={setcarBrand}
         />
 
         <Text style={styles.label}>Modelo</Text>
         <TextInput
           style={styles.input}
           placeholder="Ex: Hilux"
-          value={carmodel}
-          onChangeText={setCarModel}
+          value={carModel}
+          onChangeText={setcarModel}
         />
 
         <Text style={styles.label}>Placa</Text>
         <TextInput
           style={styles.input}
           placeholder="Ex: ABC-1234"
-          value={carlicenceplate}
-          onChangeText={setCarLicencePlate}
+          value={carLicencePlate}
+          onChangeText={setcarLicencePlate}
         />
 
         <Text style={styles.label}>Peso Máximo (kg)</Text>

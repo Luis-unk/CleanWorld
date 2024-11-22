@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
+  const [idRegisterOrder, setIdRegisterOrder] = useState('')
 
   const getOrders = async () => {
     try{

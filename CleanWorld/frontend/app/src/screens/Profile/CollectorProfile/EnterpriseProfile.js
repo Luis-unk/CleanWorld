@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export default function EnterpriseProfile({ navigation, route }) {
   const { idCollector } = route.params;
-  console.log(idCollector);
 
   const [nameEnterprise, setNameEnterprise] = useState('');
   const [cnpj, setCnpj] = useState('');
@@ -15,8 +14,7 @@ export default function EnterpriseProfile({ navigation, route }) {
   // Função para buscar os dados no backend
   const fetchEnterpriseData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/collector/${idCollector}`); // Substitua '1' pelo ID do usuário/empresa
-
+      const response = await axios.get(`http://localhost:8000/api/collector/${idCollector}`);
       const { nameEnterprise, cnpj, phone, email, password } = response.data[0];
       setNameEnterprise(nameEnterprise);
       setCnpj(cnpj);
@@ -38,10 +36,10 @@ export default function EnterpriseProfile({ navigation, route }) {
         nameEnterprise,
         cnpj,
         phone,
-        email, 
-        password
+        email,
+        password,
       });
-      alert('Alterações salvas com sucesso!');  
+      alert('Alterações salvas com sucesso!');
     } catch (error) {
       console.error('Erro ao salvar as alterações:', error);
       alert('Erro ao salvar as alterações.');
@@ -50,6 +48,14 @@ export default function EnterpriseProfile({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      {/* Botão de saída */}
+      <TouchableOpacity 
+        style={styles.exitButton} 
+        onPress={() => navigation.navigate('LoginGEnterprise')}
+      >
+        <Text style={styles.exitButtonText}>Sair</Text>
+      </TouchableOpacity>
+
       <View style={styles.header}>
         <Text style={styles.headerText}>Perfil da Empresa</Text>
       </View>
@@ -65,10 +71,10 @@ export default function EnterpriseProfile({ navigation, route }) {
 
         <Text style={styles.label}>CNPJ</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.inputDisabled]}
           placeholder="CNPJ"
           value={cnpj}
-          onChangeText={setCnpj}
+          editable={false}
         />
 
         <Text style={styles.label}>Telefone</Text>
@@ -111,6 +117,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  exitButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  exitButtonText: {
+    color: '#83D07F',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   header: {
     backgroundColor: '#83D07F',
     width: '100%',
@@ -146,6 +171,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ced4da',
     borderRadius: 5,
+  },
+  inputDisabled: {
+    backgroundColor: '#f8f9fa',
+    color: '#6c757d',
   },
   saveButton: {
     backgroundColor: '#83D07F',
