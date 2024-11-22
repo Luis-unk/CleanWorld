@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-export default function EnterpriseProfile({ navigation }) {
-  const [name, setName] = useState('');
+export default function EnterpriseProfile({ navigation, route }) {
+  const { idCollector } = route.params;
+  console.log(idCollector);
+
+  const [nameEnterprise, setNameEnterprise] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -12,9 +15,10 @@ export default function EnterpriseProfile({ navigation }) {
   // Função para buscar os dados no backend
   const fetchEnterpriseData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/collector/1'); // Substitua '1' pelo ID do usuário/empresa
-      const { nameEnterprise, cnpj, phone, email, password } = response.data;
-      setName(nameEnterprise);
+      const response = await axios.get(`http://localhost:8000/api/collector/${idCollector}`); // Substitua '1' pelo ID do usuário/empresa
+
+      const { nameEnterprise, cnpj, phone, email, password } = response.data[0];
+      setNameEnterprise(nameEnterprise);
       setCnpj(cnpj);
       setPhone(phone);
       setEmail(email);
@@ -28,9 +32,20 @@ export default function EnterpriseProfile({ navigation }) {
     fetchEnterpriseData();
   }, []);
 
-  const handleSaveChanges = () => {
-    // Lógica para salvar as alterações no backend
-    console.log('Alterações salvas!');
+  const handleSaveChanges = async () => {
+    try {
+      await axios.put(`http://localhost:8000/api/collector/${idCollector}`, {
+        nameEnterprise,
+        cnpj,
+        phone,
+        email, 
+        password
+      });
+      alert('Alterações salvas com sucesso!');  
+    } catch (error) {
+      console.error('Erro ao salvar as alterações:', error);
+      alert('Erro ao salvar as alterações.');
+    }
   };
 
   return (
@@ -44,8 +59,8 @@ export default function EnterpriseProfile({ navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Nome"
-          value={name}
-          onChangeText={setName}
+          value={nameEnterprise}
+          onChangeText={setNameEnterprise}
         />
 
         <Text style={styles.label}>CNPJ</Text>

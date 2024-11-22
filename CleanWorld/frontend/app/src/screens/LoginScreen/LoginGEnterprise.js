@@ -1,19 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext,useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import { AppContext } from '../../context/AppContext';
 
-export default function LoginGScreen({ navigation }) {
+export default function LoginGEnterprise({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const {setIdUser} = useContext(AppContext);
+  const {setIdCollector} = useContext(AppContext);
   const {setUserType} = useContext(AppContext);
 
   const handleLogin = async () => {
     setLoading(true);
-    setError('');
     if (!email || !password) {
       setError('Por favor, preencha todos os campos.');
       setLoading(false);
@@ -21,29 +20,31 @@ export default function LoginGScreen({ navigation }) {
     }
     
     try {
-      const response = await axios.post("http://localhost:8000/api/login", {
+      const response = await axios.post("http://localhost:8000/api/collector/login", {
         email,
         password,
       });
 
-      const { token, userType, idUser } = response.data;
+      const { token, userType, idCollector } = response.data;
+
+      console.log("UserTyper retornado é: ",userType)
 
       if (response.data === null){
         setError("Senha invalida")
       }
-      setIdUser(idUser);
-      
-      
+
+      setIdCollector(idCollector);
+
       if (token) {
-        if( userType === 0 )  {  
-          setUserType(userType);
-          navigation.navigate('DiscardingProfile', { token, idUser });
+        if( userType === 1 )  { 
+        setUserType(userType);
+          navigation.navigate('EnterpriseProfile', {token, idCollector})
         }
       } else {
-        setError("Credenciais Inválidas");
+        setError("Credenciais Inválidas")
         console.log("Token não recebido");
       }
-    } catch (error) {    
+    } catch (error) {
       setError("Credenciais Inválidas");
       setLoading(false);
       console.error("Erro no login: ", error.response?.data || error.message);
@@ -55,9 +56,8 @@ export default function LoginGScreen({ navigation }) {
     navigation.navigate('Pre-registro'); // Altere o nome da rota conforme necessário
   };
 
-  const handleLoginAsEnterprise = () => {
-    // Redirecionar para o login da empresa
-    navigation.navigate('LoginGEnterprise'); // Altere para a rota do login da empresa
+  const handleLoginAsUser = () => {
+    navigation.navigate('Login'); 
   };
 
   return (
@@ -73,7 +73,7 @@ export default function LoginGScreen({ navigation }) {
       </View>
 
       <View style={styles.loginBox}>
-        <Text style={styles.loginTitle}>Login</Text>
+        <Text style={styles.loginTitle}>Login Collector</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
         
         <Text style={styles.label}>Email</Text>
@@ -105,9 +105,9 @@ export default function LoginGScreen({ navigation }) {
           <Text style={styles.buttonText}>Cadastra-se</Text>
         </TouchableOpacity>
 
-        {/* Botão para redirecionar para o login da empresa */}
-        <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleLoginAsEnterprise}>
-          <Text style={styles.forgotPasswordText}>Login da Empresa</Text>
+        {/* Botão para redirecionar para o login do usuário (LoginGScreen) */}
+        <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleLoginAsUser}>
+          <Text style={styles.forgotPasswordText}>Login do Usuario</Text>
         </TouchableOpacity>
 
       </View>
@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-});
+});  

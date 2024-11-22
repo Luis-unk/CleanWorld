@@ -47,7 +47,7 @@ async function deleteUser(idUser){
     console.log(`Rows affected: ${result.affectedRows}`);
     }catch (error) {
         console.error("Error deleting user:", error);
-    }
+    }    
 
     await connection.end();
 }

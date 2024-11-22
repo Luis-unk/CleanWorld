@@ -14,6 +14,7 @@ async function createTableRegisterOrder(){
         volumeSize VARCHAR(255) NOT NULL,
         collectionDate DATE NOT NULL,
         collectionTime TIME NOT NULL,
+        address VARCHAR(255) NOT NULL,
         materialDescription VARCHAR(100),
         status INT NOT NULL,
         idUser INT NOT NULL,

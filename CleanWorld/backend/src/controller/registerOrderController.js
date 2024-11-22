@@ -13,7 +13,7 @@ async function getAllRegisterOrder(req, res) {
 }
 
 async function createRegisterOrder(req, res) {
-  const { quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector } = req.body;
+  const { quantityVolume, volumeSize, collectionDate, collectionTime, address, materialDescription, status, idUser, idCollector } = req.body;
 
   try {
     await registerOrderService.createRegisterOrder(
@@ -21,6 +21,7 @@ async function createRegisterOrder(req, res) {
         volumeSize,
         collectionDate,
         collectionTime,
+        address,
         materialDescription,
         status,
         idUser,
@@ -38,9 +39,9 @@ async function createRegisterOrder(req, res) {
 async function updateRegisterOrder(req, res) {
   try {
     const { idRegisterOrder } = req.params;
-    const { quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector } = req.body;
+    const { quantityVolume, volumeSize, collectionDate, address, collectionTime, materialDescription, status, idUser, idCollector } = req.body;
 
-    await registerOrderService.updateRegisterOrder( idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, materialDescription, status, idUser, idCollector);
+    await registerOrderService.updateRegisterOrder( idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, address, materialDescription, status, idUser, idCollector);
     res.status(201).json({message: "Sucess"});
   } catch (error) {
     res.status(500).send({

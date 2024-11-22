@@ -82,7 +82,7 @@ async function deleteUser(req, res) {
 async function getUserById(req, res) {
   try {
     const { idUser } = req.params;
-    const usuario = await userService.getUserById(idUser);
+    const user = await userService.getUserById(idUser);
 
     res.status(200).json(user);
   } catch (error) {

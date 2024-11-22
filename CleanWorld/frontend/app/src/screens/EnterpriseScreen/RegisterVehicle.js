@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import axios from 'axios';
 
 export default function RegisterVehicle({ navigation }) {
-  const [selectedVolumeSize, setSelectedVolumeSize] = useState(''); // Novo estado para rastrear a seleção
+  const [volumeSize, setVolumeSize] = useState(''); // Novo estado para rastrear a seleção
   const [carbrand, setCarBrand] = useState('');
   const [carmodel, setCarModel] = useState('');
   const [carlicenceplate, setCarLicencePlate] = useState('');
@@ -12,14 +12,13 @@ export default function RegisterVehicle({ navigation }) {
   const handleSaveChanges = async () => {
     try {
       const response = await axios.post('http://localhost:8000/api/registerVehicle', {
-        volumesize: selectedVolumeSize,
+        volumeSize,
         carbrand,
-        carmodel,
+        carmodel,         
         carlicenceplate,
         maximumweight,
       });
       console.log('Veículo cadastrado com sucesso:', response.data);
-      navigation.goBack(); // Volta para a tela anterior após salvar
     } catch (error) {
       console.error('Erro ao salvar o veículo:', error);
     }
@@ -38,14 +37,14 @@ export default function RegisterVehicle({ navigation }) {
           <TouchableOpacity
             style={[
               styles.volumeOption,
-              selectedVolumeSize === 'Pequeno' && styles.selectedOption,
+              volumeSize === 'Pequeno' && styles.selectedOption,
             ]}
-            onPress={() => setSelectedVolumeSize('Pequeno')}
+            onPress={() => setVolumeSize('Pequeno')}
           >
             <Text
               style={[
                 styles.optionText,
-                selectedVolumeSize === 'Pequeno' && styles.selectedOptionText,
+                volumeSize === 'Pequeno' && styles.selectedOptionText,
               ]}
             >
               Pequeno
@@ -55,14 +54,14 @@ export default function RegisterVehicle({ navigation }) {
           <TouchableOpacity
             style={[
               styles.volumeOption,
-              selectedVolumeSize === 'Médio' && styles.selectedOption,
+              volumeSize === 'Médio' && styles.selectedOption,
             ]}
-            onPress={() => setSelectedVolumeSize('Médio')}
+            onPress={() => setVolumeSize('Médio')}
           >
             <Text
               style={[
                 styles.optionText,
-                selectedVolumeSize === 'Médio' && styles.selectedOptionText,
+                volumeSize === 'Médio' && styles.selectedOptionText,
               ]}
             >
               Médio
@@ -72,14 +71,14 @@ export default function RegisterVehicle({ navigation }) {
           <TouchableOpacity
             style={[
               styles.volumeOption,
-              selectedVolumeSize === 'Grande' && styles.selectedOption,
+              volumeSize === 'Grande' && styles.selectedOption,
             ]}
-            onPress={() => setSelectedVolumeSize('Grande')}
+            onPress={() => setVolumeSize('Grande')}
           >
             <Text
               style={[
                 styles.optionText,
-                selectedVolumeSize === 'Grande' && styles.selectedOptionText,
+                volumeSize === 'Grande' && styles.selectedOptionText,
               ]}
             >
               Grande

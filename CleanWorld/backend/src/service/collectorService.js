@@ -79,11 +79,32 @@ async function getAllColetorById(idCollector){
     registerVehicle.maximumWeight
     FROM collector
     LEFT JOIN registerVehicle
-    ON collector.idRegisterVehicle = registerVehicle.idRegisterVehicle WHERE Collector = ?`, [idCollector]);
+    ON collector.idRegisterVehicle = registerVehicle.idRegisterVehicle WHERE idCollector = ?`, [idCollector]);
+
+    coletor.password
 
     await connection.end();
     
     return coletor;
+}
+
+async function validateLogin(email, password) {
+    const connection = await mysql.createConnection(databaseConfig);
+    const [collector] = await connection.query("SELECT * FROM collector WHERE email = ?", [email]);   
+
+    if (collector.length === 0) {
+        await connection.end(); 
+        return null;
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, collector[0].password);
+    await connection.end();
+
+    if (isPasswordValid) {
+        return collector;
+    } else {
+        return null;
+    }
 }
 
 
@@ -93,5 +114,6 @@ module.exports = {
     updateCollector,
     deleteColetor,
     getAllColetorById,
+    validateLogin
 };
 

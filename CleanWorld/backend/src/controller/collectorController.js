@@ -1,4 +1,7 @@
 const collectorService = require('../service/collectorService.js');
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 async function getAllCollector(req, res){
     try{
@@ -71,6 +74,23 @@ async function getCollectorById(req, res){
     }
 }
 
+async function validateLogin(req, res) {
+
+    try {
+      const {email, password} = req.body;
+      const validatedCollector = await collectorService.validateLogin(email, password);
+      const idCollector = validatedCollector[0].idCollector
+      const userType = validatedCollector[0].userType
+      const token = jwt.sign({ idCollector, userType}, JWT_SECRET);
+      res.status(200).json({ auth: true, token, userType, idCollector});
+    } catch (error) {
+      res.status(401).send({
+        message: "Error getting user!",
+        body: error.message,
+      })
+    }
+  }
+
 
 module.exports = {
     getAllCollector,
@@ -78,4 +98,5 @@ module.exports = {
     updateCollector,
     deleteCollector,
     getCollectorById,
+    validateLogin
 }
