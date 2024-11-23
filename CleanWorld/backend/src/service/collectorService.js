@@ -38,14 +38,14 @@ async function createCollector(nameEnterprise, cnpj, phone, userType, email, pas
     await connection.end();
 }
 
-async function updateCollector(idCollector, nameEnterprise, phone, password){
+async function updateCollector(idCollector, nameEnterprise, phone, password, idRegisterVehicle){
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
     const connection = await mysql.createConnection(databaseConfig);
 
-    const updateCollector = "UPDATE collector SET nameEnterprise = ?, phone = ?, password = ?  WHERE idCollector = ?";
+    const updateCollector = "UPDATE collector SET nameEnterprise = ?, phone = ?, password = ?, idRegisterVehicle = ? WHERE idCollector = ?";
 
-    await connection.query(updateCollector,[nameEnterprise, phone, passwordHash, idCollector]);
+    await connection.query(updateCollector,[nameEnterprise, phone, passwordHash, idCollector, idRegisterVehicle]);
 
     await connection.end();
 }

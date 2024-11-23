@@ -3,29 +3,40 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import axios from 'axios';
 
 export default function RegisterVehicle({ navigation }) {
-  const [volumeSize, setVolumeSize] = useState(''); // Novo estado para rastrear a seleção
-  const [carBrand, setcarBrand] = useState('');
-  const [carModel, setcarModel] = useState('');
-  const [carLicencePlate, setcarLicencePlate] = useState('');
-  const [maximumweight, setMaximumWeight] = useState('');
+  const [volumeSize, setVolumeSize] = useState('');
+  const [carBrand, setCarBrand] = useState('');
+  const [carModel, setCarModel] = useState('');
+  const [carLicensePlate, setCarLicensePlate] = useState('');
+  const [maximumWeight, setMaximumWeight] = useState('');
 
   const handleSaveChanges = async () => {
+    // Convertendo maximumWeight para um número
+    const numericMaximumWeight = parseFloat(maximumWeight);
+
+    // Verificando se os campos estão preenchidos
+    if (!volumeSize || !carBrand || !carModel || !carLicensePlate || isNaN(numericMaximumWeight)) {
+      console.error('Erro: Todos os campos devem ser preenchidos corretamente.');
+      return;
+    }
+
+    const payload = {
+      volumeSize: volumeSize.toUpperCase(), // Convertendo para maiúsculas para atender ao formato esperado (e.g., "SMALL")
+      carBrand,
+      carModel,
+      carLicensePlate,
+      maximumWeight: numericMaximumWeight, // Enviando como número
+    };
+
     try {
+      console.log('Enviando JSON:', payload);
 
-      console.log({ volumeSize, carBrand, carModel, carLicencePlate, maximumweight });
-
-      const response = await axios.post(`http://localhost:8000/registerVehicle`, {
-        volumeSize,
-        carBrand,
-        carModel,         
-        carLicencePlate,
-        maximumweight,
-      });
-      console.log({ volumeSize, carBrand, carModel, carLicencePlate, maximumweight });
+      const response = await axios.post('http://localhost:8000/api/registerVehicle', payload);
 
       console.log('Veículo cadastrado com sucesso:', response.data);
+      alert('Veículo cadastrado com sucesso!');
     } catch (error) {
       console.error('Erro ao salvar o veículo:', error);
+      alert('Erro ao salvar o veículo. Tente novamente.');
     }
   };
 
@@ -36,20 +47,19 @@ export default function RegisterVehicle({ navigation }) {
       </View>
 
       <View style={styles.profileBox}>
-        {/* Opções de seleção para o tamanho do volume */}
         <Text style={styles.sectionTitle}>Tamanho do Volume</Text>
         <View style={styles.volumeOptions}>
           <TouchableOpacity
             style={[
               styles.volumeOption,
-              volumeSize === 'Pequeno' && styles.selectedOption,
+              volumeSize === 'SMALL' && styles.selectedOption,
             ]}
-            onPress={() => setVolumeSize('Pequeno')}
+            onPress={() => setVolumeSize('SMALL')}
           >
             <Text
               style={[
                 styles.optionText,
-                volumeSize === 'Pequeno' && styles.selectedOptionText,
+                volumeSize === 'SMALL' && styles.selectedOptionText,
               ]}
             >
               Pequeno
@@ -59,14 +69,14 @@ export default function RegisterVehicle({ navigation }) {
           <TouchableOpacity
             style={[
               styles.volumeOption,
-              volumeSize === 'Médio' && styles.selectedOption,
+              volumeSize === 'MEDIUM' && styles.selectedOption,
             ]}
-            onPress={() => setVolumeSize('Médio')}
+            onPress={() => setVolumeSize('MEDIUM')}
           >
             <Text
               style={[
                 styles.optionText,
-                volumeSize === 'Médio' && styles.selectedOptionText,
+                volumeSize === 'MEDIUM' && styles.selectedOptionText,
               ]}
             >
               Médio
@@ -76,14 +86,14 @@ export default function RegisterVehicle({ navigation }) {
           <TouchableOpacity
             style={[
               styles.volumeOption,
-              volumeSize === 'Grande' && styles.selectedOption,
+              volumeSize === 'LARGE' && styles.selectedOption,
             ]}
-            onPress={() => setVolumeSize('Grande')}
+            onPress={() => setVolumeSize('LARGE')}
           >
             <Text
               style={[
                 styles.optionText,
-                volumeSize === 'Grande' && styles.selectedOptionText,
+                volumeSize === 'LARGE' && styles.selectedOptionText,
               ]}
             >
               Grande
@@ -91,13 +101,12 @@ export default function RegisterVehicle({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* Campos de entrada restantes */}
         <Text style={styles.label}>Marca</Text>
         <TextInput
           style={styles.input}
           placeholder="Ex: Toyota"
           value={carBrand}
-          onChangeText={setcarBrand}
+          onChangeText={setCarBrand}
         />
 
         <Text style={styles.label}>Modelo</Text>
@@ -105,23 +114,24 @@ export default function RegisterVehicle({ navigation }) {
           style={styles.input}
           placeholder="Ex: Hilux"
           value={carModel}
-          onChangeText={setcarModel}
+          onChangeText={setCarModel}
         />
 
         <Text style={styles.label}>Placa</Text>
         <TextInput
           style={styles.input}
           placeholder="Ex: ABC-1234"
-          value={carLicencePlate}
-          onChangeText={setcarLicencePlate}
+          value={carLicensePlate}
+          onChangeText={setCarLicensePlate}
         />
 
         <Text style={styles.label}>Peso Máximo (kg)</Text>
         <TextInput
           style={styles.input}
-          placeholder="Ex: 2000 kg"
-          value={maximumweight}
+          placeholder="Ex: 1"
+          value={maximumWeight}
           onChangeText={setMaximumWeight}
+          keyboardType="numeric"
         />
 
         <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>

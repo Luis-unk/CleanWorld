@@ -1,4 +1,4 @@
-const registerVehicleService = require("../service/RegisterVehicleService.js");
+const registerVehicleService = require('../service/registerVehicleService')
 const jwt = require("jsonwebtoken");
 const SECRET = 'Hoisjda9hyg2872ijsadlOOOCleanWorld'
 
@@ -15,7 +15,8 @@ async function getAllRegisterVehicle(req, res) {
 }
 
 async function createRegisterVehicle(req, res) {
-  const { volumeSize, carBrand, carModel, carLicensePlate, maximumWeight } = req.body;
+
+  const { volumeSize, carBrand, carModel, carLicensePlate, maximumWeight }= req.body;
 
   try {
     await registerVehicleService.createRegisterVehicle(
