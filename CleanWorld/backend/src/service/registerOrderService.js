@@ -13,6 +13,7 @@ async function getAllRegisterOrder(){
     registerOrder.address,
     registerOrder.materialDescription,
     registerOrder.status,
+    registerOrder.idCollector,
     user.idUser,
     user.name,
     user.cpf,
@@ -39,12 +40,12 @@ async function createRegisterOrder(quantityVolume, volumeSize, collectionDate, c
     await connection.end();
 }
 
-async function updateRegisterOrder(idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, address, materialDescription, status, idUser, idregisterOrder){
+async function updateRegisterOrder(idRegisterOrder, quantityVolume, volumeSize, collectionDate, collectionTime, address, materialDescription, status, idUser, idCollector){
     const connection = await mysql.createConnection(databaseConfig);
     
-    const updateRegisterOrder = "UPDATE RegisterOrder SET quantityVolume = ?, volumeSize = ?, collectionDate = STR_TO_DATE(?, '%d/%m/%Y'), collectionTime = ?, address = ?, materialDescription = ?, status = ?, idUser = ?, idregisterOrder = ? WHERE idRegisterOrder = ?";
+    const updateRegisterOrder = "UPDATE RegisterOrder SET quantityVolume = ?, volumeSize = ?, collectionDate = STR_TO_DATE(?, '%d/%m/%Y'), collectionTime = ?, address = ?, materialDescription = ?, status = ?, idUser = ?, idCollector = ? WHERE idRegisterOrder = ?";
 
-    await connection.query(updateRegisterOrder,[ quantityVolume, volumeSize, collectionDate, collectionTime, address,materialDescription, status, idUser, idregisterOrder, idRegisterOrder]);
+    await connection.query(updateRegisterOrder,[ quantityVolume, volumeSize, collectionDate, collectionTime, address,materialDescription, status, idUser, idCollector, idRegisterOrder]);
 
     await connection.end();
 }

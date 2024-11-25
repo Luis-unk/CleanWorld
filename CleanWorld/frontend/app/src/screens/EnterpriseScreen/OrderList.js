@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+
+import { format } from 'date-fns';
+import { AppContext } from '../../context/AppContext';
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
-  const [idRegisterOrder, setIdRegisterOrder] = useState('')
+  const {idCollector} = useContext(AppContext);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [recusedOrders, setRecusedOrders] = useState([]);
 
   const getOrders = async () => {
     try{
@@ -11,35 +17,76 @@ export default function OrderList() {
       console.log(response.data)
       setOrders(response.data)
     }catch(error){
-      console.error("Erro no login: ", error.response?.data || error.message);
+      console.error("Erro ao buscar informações do pedido: ", error.response?.data || error.message);
     }
   }
 
-  useEffect(() => {
-    getOrders()
-    console.log(orders)
-  }, [])
-
-  const handleAccept = (idRegisterOrder) => {
-    console.log(`Pedido ${id} aceito!`);
+  const filterOrders = (collectorId) => {
+    if (!collectorId) {
+      return orders;
+    } else {
+      return orders.filter(order => order.idCollector === null);
+    }
   };
 
-  const handleReject = (idRegisterOrder) => {
-    console.log(`Pedido ${id} recusado!`);
+  const formatBirthDate = (date) => {
+    if (date) {
+      const formattedDate = format(new Date(date), 'dd/MM/yyyy'); 
+      return formattedDate;
+    }
+    return ''; 
+  };
+
+  useEffect(() => {
+    getOrders()
+  }, [])
+
+  useEffect(() => {
+    const filtered = filterOrders(idCollector);
+    setFilteredOrders(filtered);
+  }, [idCollector, orders]);
+
+  const handleAccept = async (order) => {
+
+    try{
+      const response = await axios.put(`http://localhost:8000/api/registerOrder/${order.idregisterOrder}`, {
+        quantityVolume: order.quantityVolume,
+        volumeSize: order.volumeSize,
+        collectionDate: formatBirthDate(order.collectionDate),
+        collectionTime: order.collectionTime,
+        address: order.address,
+        materialDescription: order.materialDescription,
+        status: 1,
+        idUser: order.idUser,
+        idCollector
+       })
+       console.log(`Pedido ${order.idregisterOrder} aceito!`);
+       await getOrders();
+      
+     }catch(error){
+       console.error("Erro ao aceitar pedido: ", error.response?.data || error.message);
+     }
+
+  };
+
+  const handleReject = (order) => {
+    setRecusedOrders(order);
+    console.log(`Pedido ${order.idregisterOrder} recusado!`);
+    setOrders((prevOrders) => prevOrders.filter((o) => o.idregisterOrder !== order.idregisterOrder));
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Pedidos Realizados</Text>
+        <Text style={styles.headerText}>lista de Pedidos</Text>
       </View>
 
       {/* Lista de Pedidos */}
       <View style={styles.orderContainer}>
-        {orders.map((order) => (
+        {filteredOrders.map((order) => (
           <View key={order.idRegisterOrder} style={styles.orderBox}>
             <View style={styles.orderLeft}>
-              <Text style={styles.orderText}>{order.collectionDate}</Text>
+              <Text style={styles.orderText}>{formatBirthDate(order.collectionDate)}</Text>
               <Text style={styles.orderText}>{order.collectionTime}</Text>
             </View>
             <View style={styles.orderRight}>
@@ -52,13 +99,13 @@ export default function OrderList() {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.acceptButton}
-                  onPress={() => handleAccept(order.id)}
+                  onPress={() => handleAccept(order)}
                 >
                   <Text style={styles.buttonText}>Aceitar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.rejectButton}
-                  onPress={() => handleReject(order.id)}
+                  onPress={() => handleReject(order)}
                 >
                   <Text style={styles.buttonText}>Recusar</Text>
                 </TouchableOpacity>

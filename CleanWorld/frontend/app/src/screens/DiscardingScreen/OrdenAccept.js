@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { AppContext } from '../../context/AppContext';
-import { Button } from 'react-native-web';
 import { TouchableOpacity } from 'react-native';
 
 export default function OrdenAccept() {
