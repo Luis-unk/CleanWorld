@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { AppContext } from '../../context/AppContext';
@@ -35,6 +35,10 @@ export default function OrderAccepted() {
     return ''; 
   };
 
+  const handleRefreshList = () => {
+    getOrders();
+  }
+
   useEffect(()=>{
     getOrders()
   },[])
@@ -67,6 +71,7 @@ export default function OrderAccepted() {
           </View>
         ))}
       </View>
+      <TouchableOpacity onPress={handleRefreshList} style={styles.refreshButton}><Text style={styles.refreshText}>Atualizar</Text></TouchableOpacity>
     </ScrollView>
   );
 }
@@ -113,4 +118,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
+  refreshButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#A0B8B1', 
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.3, 
+    shadowRadius: 4, 
+    elevation: 5, 
+  },
+  refreshText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10, // Espaço entre o ícone e o texto
+  }
 });

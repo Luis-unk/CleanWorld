@@ -4,9 +4,10 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { AppContext } from '../../../context/AppContext';
 
-export default function DiscardingProfile({ navigation}) {
-  const {idUser} = useContext(AppContext);
-  console.log(idUser)
+export default function DiscardingProfile({ navigation }) {
+  const { idUser } = useContext(AppContext);
+  console.log(idUser);
+
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
@@ -14,12 +15,11 @@ export default function DiscardingProfile({ navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   const fetchDiscarderData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/${idUser}`); 
-      console.log(response.data)
-      const { name, cpf, phone, birthDate, email, password} = response.data[0];
+      const response = await axios.get(`http://localhost:8000/api/user/${idUser}`);
+      console.log(response.data);
+      const { name, cpf, phone, birthDate, email, password } = response.data[0];
       setName(name || '');
       setCpf(cpf || '');
       setPhone(phone || '');
@@ -37,23 +37,23 @@ export default function DiscardingProfile({ navigation}) {
 
   const formatBirthDate = (date) => {
     if (date) {
-      const formattedDate = format(new Date(date), 'dd/MM/yyyy'); 
+      const formattedDate = format(new Date(date), 'dd/MM/yyyy');
       return formattedDate;
     }
-    return ''; 
+    return '';
   };
 
   const handleSaveChanges = async () => {
     try {
       await axios.put(`http://localhost:8000/api/user/${idUser}`, {
         name,
-        cpf,
+        cpf, // CPF é enviado, mas permanece não editável no formulário
         phone,
         birthDate,
-        email, 
-        password
+        email,
+        password,
       });
-      alert('Alterações salvas com sucesso!');  
+      alert('Alterações salvas com sucesso!');
     } catch (error) {
       console.error('Erro ao salvar as alterações:', error);
       alert('Erro ao salvar as alterações.');
@@ -77,10 +77,10 @@ export default function DiscardingProfile({ navigation}) {
 
         <Text style={styles.label}>CPF</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.inputDisabled]}
           placeholder="CPF"
           value={cpf}
-          onChangeText={setCpf}
+          editable={false} // Impede edição do CPF
         />
 
         <Text style={styles.label}>Telefone</Text>
@@ -149,6 +149,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ced4da',
     borderRadius: 5,
+  },
+  inputDisabled: {
+    backgroundColor: '#f8f9fa', // Fundo cinza claro
+    color: '#6c757d', // Texto em tom mais claro
   },
   saveButton: {
     backgroundColor: '#83D07F',

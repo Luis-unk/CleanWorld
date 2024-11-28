@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Para gerenciar o armazenamento local
 
 export default function EnterpriseProfile({ navigation, route }) {
   const { idCollector } = route.params;
@@ -46,14 +47,37 @@ export default function EnterpriseProfile({ navigation, route }) {
     }
   };
 
+  // Função para realizar o logout
+  const handleLogout = () => {
+    Alert.alert(
+      'Confirmar Logout',
+      'Você tem certeza que deseja sair?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Sim',
+          onPress: async () => {
+            // Limpar os dados de autenticação (exemplo usando AsyncStorage)
+            await AsyncStorage.removeItem('userToken');
+            await AsyncStorage.removeItem('idCollector');
+            navigation.replace('LoginGEnterprise'); // Redirecionar para o login
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
-      {/* Botão de saída */}
+      {/* Botão de Logout */}
       <TouchableOpacity 
         style={styles.exitButton} 
-        onPress={() => navigation.navigate('LoginGEnterprise')}
+        onPress={handleLogout}
       >
-        <Text style={styles.exitButtonText}>Sair</Text>
+        <Text style={styles.exitButtonText}>Logout</Text>
       </TouchableOpacity>
 
       <View style={styles.header}>

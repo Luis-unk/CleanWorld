@@ -40,6 +40,7 @@ export default function OrderList() {
   useEffect(() => {
     getOrders()
   }, [])
+  
 
   useEffect(() => {
     const filtered = filterOrders(idCollector);
@@ -69,11 +70,6 @@ export default function OrderList() {
 
   };
 
-  const handleReject = (order) => {
-    setRecusedOrders(order);
-    console.log(`Pedido ${order.idregisterOrder} recusado!`);
-    setOrders((prevOrders) => prevOrders.filter((o) => o.idregisterOrder !== order.idregisterOrder));
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -107,7 +103,6 @@ export default function OrderList() {
                   style={styles.rejectButton}
                   onPress={() => handleReject(order)}
                 >
-                  <Text style={styles.buttonText}>Recusar</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -167,13 +162,6 @@ const styles = StyleSheet.create({
   },
   acceptButton: {
     backgroundColor: '#4CAF50',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginLeft: 10,
-  },
-  rejectButton: {
-    backgroundColor: '#F44336',
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 5,

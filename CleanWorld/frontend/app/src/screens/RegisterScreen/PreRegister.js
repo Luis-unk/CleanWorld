@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 
 export default function PreRegister({ navigation }) {
   const [nameEnterprise, setnameEnterprise] = useState('');
-  const [name, setname] = useState('')
+  const [name, setname] = useState('');
   const [userType, setUserType] = useState(0); // 0: Pessoa Física, 1: Empresa
 
   const handlePreRegister = () => {
@@ -143,21 +143,24 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '40%',
     alignItems: 'center',
+    borderWidth: 1,
   },
   activeToggle: {
-    backgroundColor: '#83D07F',
+    backgroundColor: '#ffffff', // Fundo branco
+    borderColor: '#83D07F', // Borda verde
   },
   inactiveToggle: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#83D07F', // Fundo verde
+    borderColor: '#83D07F', // Mesma cor de fundo
   },
   toggleText: {
     fontWeight: 'bold',
   },
   activeText: {
-    color: '#FFFFFF',
+    color: '#83D07F', // Texto verde
   },
   inactiveText: {
-    color: '#83D07F', // Tom mais escuro para o texto inativo
+    color: '#FFFFFF', // Texto branco
   },
   loginBox: {
     backgroundColor: '#ffffff',
