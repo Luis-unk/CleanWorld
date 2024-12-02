@@ -31,9 +31,9 @@ async function createCollector(req, res){
 async function updateCollector(req, res){
     try{
         const {idCollector}=req.params;
-        const {nameEnterprise, phone, password, idRegisterVehicle} = req.body;
+        const {nameEnterprise, cnpj, phone,userType, email, password, idRegisterVehicle} = req.body;
 
-        await collectorService.updateCollector(idCollector, nameEnterprise, phone, password, idRegisterVehicle);
+        await collectorService.updateCollector(idCollector, nameEnterprise, cnpj, phone,userType, email, password, idRegisterVehicle);
         
         res.status(201).json({message: "Sucess"});    
     }catch(error){

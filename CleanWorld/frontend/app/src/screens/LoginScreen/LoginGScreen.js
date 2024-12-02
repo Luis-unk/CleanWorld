@@ -38,6 +38,7 @@ export default function LoginGScreen({ navigation }) {
         if( userType === 0 )  {  
           setUserType(userType);
           navigation.navigate('DiscardingProfile', { token, idUser });
+          setLoading(false);
         }
       } else {
         setError("Credenciais Inválidas");

@@ -1,4 +1,4 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import { AppContext } from '../../context/AppContext';
@@ -9,7 +9,8 @@ export default function LoginGEnterprise({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const {setIdCollector} = useContext(AppContext);
-  const {setUserType} = useContext(AppContext);
+  const {setUserType, idCollector} = useContext(AppContext);
+
 
   const handleLogin = async () => {
     setLoading(true);
@@ -39,6 +40,7 @@ export default function LoginGEnterprise({ navigation }) {
         if( userType === 1 )  { 
         setUserType(userType);
           navigation.navigate('EnterpriseProfile', {token, idCollector})
+          setLoading(false)
         }
       } else {
         setError("Credenciais Inválidas")

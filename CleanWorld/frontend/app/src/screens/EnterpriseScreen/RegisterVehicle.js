@@ -1,24 +1,53 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import {AppContext} from '../../context/AppContext';
 
 export default function RegisterVehicle({ navigation }) {
+  const { idCollector, userType } = useContext(AppContext);
   const [volumeSize, setVolumeSize] = useState('');
   const [carBrand, setCarBrand] = useState('');
   const [carModel, setCarModel] = useState('');
   const [carLicensePlate, setCarLicensePlate] = useState('');
   const [maximumWeight, setMaximumWeight] = useState('');
+  const [idRegisterVehicle, setIdRegisterVehicle] = useState('');
+  const [isVehicle, setIsVehicle] = useState(false);
+
+  const [nameEnterprise, setNameEnterprise] = useState('');
+  const [cnpj, setCnpj] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const fetchEnterpriseData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/collector/${idCollector}`);
+      const { nameEnterprise, cnpj, phone, email, password} = response.data[0];
+      setNameEnterprise(nameEnterprise);
+      setCnpj(cnpj);
+      setPhone(phone);
+      setEmail(email);
+      setPassword(password);
+    } catch (error) {
+      console.error('Erro ao buscar os dados:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEnterpriseData();
+  }, []);
 
   const handleSaveChanges = async () => {
     // Convertendo maximumWeight para um número
     const numericMaximumWeight = parseFloat(maximumWeight);
-
-    // Verificando se os campos estão preenchidos
-    if (!volumeSize || !carBrand || !carModel || !carLicensePlate || isNaN(numericMaximumWeight)) {
+  
+    // Verificando se os campos estão preenchidos corretamente
+    if (!volumeSize || !carBrand || !carModel || !carLicensePlate || isNaN(numericMaximumWeight) || numericMaximumWeight <= 0) {
       console.error('Erro: Todos os campos devem ser preenchidos corretamente.');
+      alert('Por favor, preencha todos os campos corretamente.');
       return;
     }
-
+  
     const payload = {
       volumeSize: volumeSize.toUpperCase(), // Convertendo para maiúsculas para atender ao formato esperado (e.g., "SMALL")
       carBrand,
@@ -26,19 +55,62 @@ export default function RegisterVehicle({ navigation }) {
       carLicensePlate,
       maximumWeight: numericMaximumWeight, // Enviando como número
     };
+  
+    try {
+      console.log('Enviando JSON:', payload);
+  
+      const response = await axios.post('http://localhost:8000/api/registerVehicle', payload);
+  
+      console.log('Veículo cadastrado com sucesso:', response.data.idRegisterVehicle);
+      setIdRegisterVehicle(response.data.idRegisterVehicle)
+      alert('Veículo cadastrado com sucesso!');
+      setIsVehicle(true);
+    } catch (error) {
+      console.error('Erro ao salvar o veículo:', error);
+  
+      // Exibe o erro detalhado no console se disponível
+      if (error.response) {
+        console.error('Resposta do servidor:', error.response.data);
+      }
+  
+      // Alerta mais detalhado para o usuário
+      alert('Erro ao salvar o veículo. Tente novamente. Detalhes: ' + (error.response?.data?.message || 'Erro desconhecido.'));
+    }
+  };
+
+  const handleUpdateVehicle = async () => {
+    const numericMaximumWeight = parseFloat(maximumWeight);
+
+    const payload = {
+      volumeSize: volumeSize.toUpperCase(), 
+      carBrand,
+      carModel,
+      carLicensePlate,
+      maximumWeight: numericMaximumWeight, 
+    };
 
     try {
       console.log('Enviando JSON:', payload);
 
-      const response = await axios.post('http://localhost:8000/api/registerVehicle', payload);
-
-      console.log('Veículo cadastrado com sucesso:', response.data);
-      alert('Veículo cadastrado com sucesso!');
+      const response = await axios.put(`http://localhost:8000/api/registerVehicle/${idRegisterVehicle}`,
+        payload
+      );
+  
+      console.log('Veículo atualizado com sucesso:', response.data);
+      alert('Veículo atualizado com sucesso!');
+      setIsVehicle(true);
     } catch (error) {
-      console.error('Erro ao salvar o veículo:', error);
-      alert('Erro ao salvar o veículo. Tente novamente.');
+      console.error('Erro ao atualizar o veículo:', error);
+  
+      // Exibe o erro detalhado no console se disponível
+      if (error.response) {
+        console.error('Resposta do servidor:', error.response.data);
+      }
+  
+      // Alerta mais detalhado para o usuário
+      alert('Erro ao atualizar o veículo. Tente novamente. Detalhes: ' + (error.response?.data?.message || 'Erro desconhecido.'));
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -134,9 +206,16 @@ export default function RegisterVehicle({ navigation }) {
           keyboardType="numeric"
         />
 
-        <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-          <Text style={styles.saveButtonText}>Salvar Veículo</Text>
-        </TouchableOpacity>
+{ !isVehicle ? (
+  <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
+    <Text style={styles.saveButtonText}>Salvar Veículo</Text>
+  </TouchableOpacity>
+) : (
+  <TouchableOpacity style={styles.saveButton} onPress={handleUpdateVehicle}>
+    <Text style={styles.saveButtonText}>Atualizar Veículo</Text>
+  </TouchableOpacity>
+)}
+        
       </View>
     </View>
   );

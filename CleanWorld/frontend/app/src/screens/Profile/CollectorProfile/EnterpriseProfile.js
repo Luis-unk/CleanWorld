@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Para gerenciar o armazenamento local
+import { AppContext } from '../../../context/AppContext';
 
-export default function EnterpriseProfile({ navigation, route }) {
-  const { idCollector } = route.params;
+export default function EnterpriseProfile({ navigation }) {
+  const { userType, idCollector, setIdCollector, setUserType } = useContext(AppContext);
 
   const [nameEnterprise, setNameEnterprise] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [idRegisterVehicle, setIdRegisterVehicle] = useState('');
 
   // Função para buscar os dados no backend
   const fetchEnterpriseData = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/collector/${idCollector}`);
-      const { nameEnterprise, cnpj, phone, email, password } = response.data[0];
+      const { nameEnterprise, cnpj, phone, email, password, idRegisterVehicle } = response.data[0];
       setNameEnterprise(nameEnterprise);
       setCnpj(cnpj);
       setPhone(phone);
       setEmail(email);
       setPassword(password);
+      setIdRegisterVehicle(idRegisterVehicle);
     } catch (error) {
       console.error('Erro ao buscar os dados:', error);
     }
@@ -37,9 +39,12 @@ export default function EnterpriseProfile({ navigation, route }) {
         nameEnterprise,
         cnpj,
         phone,
+        userType,
         email,
         password,
+        idRegisterVehicle
       });
+      console.log("ATUALIZOU")
       alert('Alterações salvas com sucesso!');
     } catch (error) {
       console.error('Erro ao salvar as alterações:', error);
@@ -48,26 +53,10 @@ export default function EnterpriseProfile({ navigation, route }) {
   };
 
   // Função para realizar o logout
-  const handleLogout = () => {
-    Alert.alert(
-      'Confirmar Logout',
-      'Você tem certeza que deseja sair?',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'Sim',
-          onPress: async () => {
-            // Limpar os dados de autenticação (exemplo usando AsyncStorage)
-            await AsyncStorage.removeItem('userToken');
-            await AsyncStorage.removeItem('idCollector');
-            navigation.replace('LoginGEnterprise'); // Redirecionar para o login
-          },
-        },
-      ]
-    );
+  const handleLogout = () => { 
+        setUserType('');
+        setIdCollector('');
+        navigation.navigate('LoginGEnterprise');
   };
 
   return (

@@ -15,22 +15,33 @@ async function getAllRegisterVehicle(req, res) {
 }
 
 async function createRegisterVehicle(req, res) {
-
-  const { volumeSize, carBrand, carModel, carLicensePlate, maximumWeight }= req.body;
+  // Desestrutura os dados enviados no corpo da requisição
+  const { volumeSize, carBrand, carModel, carLicensePlate, maximumWeight } = req.body;
 
   try {
-    await registerVehicleService.createRegisterVehicle(
+    // Chama o serviço que registra o veículo e aguarda o retorno do ID do novo registro
+    const newVehicleId = await registerVehicleService.createRegisterVehicle(
         volumeSize,
         carBrand,
         carModel,
         carLicensePlate,
         maximumWeight
     );
-    res.status(201).json({ message: "Sucess" });
+    
+    // Retorna uma resposta de sucesso com o ID do registro criado
+    res.status(201).json({
+      message: "Veículo registrado com sucesso", 
+      idRegisterVehicle: newVehicleId
+    });
+
   } catch (error) {
-    res.status(500).send({
-      message: "Error adding RegisterVehicle! ",
-      body: error.message,
+    // Caso ocorra um erro, retorna uma resposta de erro com detalhes
+    console.error("Erro ao tentar registrar veículo:", error);  // Log do erro no servidor para depuração
+
+    // Envia uma resposta de erro para o cliente com status 500 (erro interno)
+    res.status(500).json({
+      message: "Erro ao adicionar veículo.",
+      error: error.message // Retorna a mensagem do erro gerado na função de serviço
     });
   }
 }

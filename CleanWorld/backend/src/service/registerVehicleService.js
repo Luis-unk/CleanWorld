@@ -12,13 +12,37 @@ async function getAllRegisterVehicle(){
     return rows;
 }
 
-async function createRegisterVehicle(volumeSize, carBrand, carModel, carLicensePlate, maximumWeight){
-    const connection = await mysql.createConnection(databaseConfig);
+async function createRegisterVehicle(volumeSize, carBrand, carModel, carLicensePlate, maximumWeight) {
+    let connection;
 
-    const insertRegisterVehicle = "INSERT INTO RegisterVehicle(volumeSize, carBrand, carModel, carLicensePlate, maximumWeight) values (?,?,?,?,?)";
+    try {
+        // Estabelece a conexão com o banco de dados
+        connection = await mysql.createConnection(databaseConfig);
 
-    await connection.query(insertRegisterVehicle, [volumeSize, carBrand, carModel, carLicensePlate, maximumWeight])
-    await connection.end();
+        // Query de inserção com tratamento para duplicidade
+        const insertQuery = `
+            INSERT INTO RegisterVehicle (volumeSize, carBrand, carModel, carLicensePlate, maximumWeight)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE idRegisterVehicle = LAST_INSERT_ID(idRegisterVehicle)`;
+
+        // Executa a query e armazena o resultado
+        const [result] = await connection.query(insertQuery, [volumeSize, carBrand, carModel, carLicensePlate, maximumWeight]);
+
+        // Retorna o ID do registro inserido ou atualizado
+        const insertedId = result.insertId;
+        return insertedId;
+
+    } catch (error) {
+        // Se ocorrer algum erro, imprime no console e lança o erro novamente
+        console.error('Erro ao registrar o veículo:', error);
+        throw error; // Lança o erro para ser tratado fora da função
+
+    } finally {
+        // Fecha a conexão com o banco de dados, caso ela tenha sido estabelecida
+        if (connection) {
+            await connection.end();
+        }
+    }
 }
 
 async function updateRegisterVehicle(idRegisterVehicle, volumeSize, carBrand, carModel, carLicensePlate, maximumWeight){

@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { AppContext } from '../../../context/AppContext';
 
 export default function DiscardingProfile({ navigation }) {
-  const { idUser } = useContext(AppContext);
+  const { idUser , setUserType, setIdUser} = useContext(AppContext);
   console.log(idUser);
 
   const [name, setName] = useState('');
@@ -60,8 +60,20 @@ export default function DiscardingProfile({ navigation }) {
     }
   };
 
+  const handleLogout = () => { 
+    setUserType('');
+    setIdUser('');
+    navigation.navigate('Login');
+};
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity 
+        style={styles.exitButton} 
+        onPress={handleLogout}
+      >
+        <Text style={styles.exitButtonText}>Logout</Text>
+      </TouchableOpacity>
       <View style={styles.header}>
         <Text style={styles.headerText}>Perfil do Descartante</Text>
       </View>
@@ -165,5 +177,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  exitButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
   },
 });
